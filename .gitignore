@@ -1,0 +1,5 @@
+#que no le de seguimiento a los archivos pdf
+*.pdf
+
+#que no le de seguimiento a los archivos que terminen con ~
+*~

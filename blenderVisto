@@ -1,0 +1,28 @@
+S=shift
+m=movimiento del mouse
+cd=click derecho
+ci=click izquierdo
+
+S-a --> insertar mech(objetos pre fabricado)
+cd-m-ci -->seleccinar, mover y luego soltar, el objeto, en lugar
+1 --> frontal
+3 --> lateral derecha
+7 --> arriba
+r --> rotar (seleccionar objeto primero)
+r-x --> rotar sobre eje x
+r-y --> rotar sobre eje y
+r-z --> rotar sobre eje z
+s --> escalar objeto
+s x --> escalar objeto en el eje x
+s y --> escalar objeto en el eje y
+s z --> escalar objeto en el eje z
+tabulador --> modo edicion de objetos
+control-tabulador -->(en modo edicion) elejir modo de seleccion:
+		     arista, cara o vertice
+e --> estruir. Seleccionar cara, vertice o arista entes.
+f --> (seleccionar dos aristas antes) unir aristas
+control-r --> crear un ciclo (si se mueve el scrol incrementa los ciclos)
+n --> muestra un menu muy util
+min --> 9:00
+https://www.youtube.com/watch?v=mEbUgMU0wX8
+

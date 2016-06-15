@@ -1,0 +1,33 @@
+* Configuracion de usuario
+  - git config --global user.name "miNombre" :: configura el nombre
+  - git config --global user.correo "miCorreo" :: configura el correo
+  - git config --global color.ui true :: activa la configuracion de colores
+  - git config --global --list :: muestra las configuraciones hechas a
+       este usuario
+* Local
+  - git init :: iniciar proyecto, que git empiece a monitoriar los
+                cambios de la carpeta actual, es decir crea el
+                repositorio
+  - git status :: estado del proyecto, muestra que archivos estan y no
+                  estan agregados al repositorio
+  - git add archivo :: agregar "archivo" al repositorio
+  - git add -A :: agregar todos los archivos
+  - git commit -m "este es el inicio" :: confirmar los cambios
+       agregando un mensaje
+  - git remote add origin https://github.com/wilsoneliseo/insertar.git :: 
+       agregar conexion al servidor de este repositorio en linea.
+  - git remote rm origin :: eliminar conexion
+  - git push -u origin master :: enviar los archivos locales al
+       repositorio en linea.
+  - git log :: mostrar los commits creados
+  - git checkout codigoHash :: regresa al commit, del proyecto, que
+       identifica el codigo hash
+  - git checkout master :: regresa al ultimo commit hecho
+  - git reset --soft codigoHash :: borra el commit que identifica el
+       codigo hash pero sin tocar el codigo
+  - git reset --hard codigoHash :: borra el commit que identifica el
+       codigo hash borrando los cambios hechos en la fuente de codigo
+  - git reset --hard HEAD~1 :: regresa al penultimo commit y borra el
+       actual con todo y cambios.
+  - git rm grit.tex :: elimina y deja de darle seguimiento al archivo
+       grit.tex

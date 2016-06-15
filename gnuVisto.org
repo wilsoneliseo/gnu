@@ -1,0 +1,54 @@
+* SIN CLASIFICAR
+  + nproc :: muestra el numero de procesadores de la computadora.
+
+  + su -c "rm archivo.txt" :: ejecuta como administrador el comando rm
+    y luego vuelve al usuario normal
+
+  + df -h :: muestra información de los discos. La opcion -h indica
+    "lectura humana"
+
+  + du -h :: muestra ocupación de espacio por carpeta. -h indica
+             lectura humana de los numeros.
+
+  + du -hd 1 ~/Escritorio :: opcion -d especifica nivel de profundidad
+
+  + du -ah --time ~/Escritorio :: tamaños y ultimas fechas de
+       modificacion
+
+  + sed 's/^/---/' archivo.txt :: coloca tres giones al principio de
+       cada linea de 'archivo.txt'
+
+  + sed -n '20,30p' archivo.txt :: muestra lineas 20 al 30 de
+       'archivo.txt' la 'p' indica printer
+
+  + testdisk :: recuperar archivos eliminados con particiones para
+                windows. Mas info [fn:1]
+
+  + photorec :: recuperar archivos multimedia. Se instala junto con
+                testdisk.
+
+  + uname -m :: muestra informacion del nucleo del sistema
+
+  + lsb_release -a :: muestra informacion de la distribucion del
+                      sistema
+
+
+* MANEJO DE ARCHIVOS MASIVOS
+  
+  + find . -type d -empty -print0 | xargs -0 rmdir :: borra carpetas
+       vacias en el directorio actual
+
+  + find . -type f -name *.txt -exec mv {} ./dir_5 \; :: mover
+       archivos txt en la carpeta actual hacia dir_5. No importa si
+       los txt's estan en subcarpetas.
+
+  + find . -type f -name *.txt -delete :: borra todos los txt de la
+       carpeta actual y de sus subcarpetas
+
+
+
+ 
+
+* Footnotes
+
+[fn:1] Visitar http://kuboosoft.blogspot.com/2013/03/como-recuperar-archivos-eliminados-en.html
