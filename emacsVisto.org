@@ -1,53 +1,54 @@
 * Comandos de edición TeX
-  C-j -----> Insertar un salto de párrafo (dos nuevas líneas) y
-  verifica en el párrafo anterior que no haya llaves disparejas o
-  signos de pesos
+  - C-j :: un salto de párrafo (dos nuevas líneas) y verifica en el
+  párrafo anterior que no haya llaves disparejas o signos de pesos
 
-  M-x tex-validate-region -----> Verifica en los párrafos de la región
-  que no haya llaves desparejas o signos de pesos
+  - M-x tex-validate-region :: en los párrafos de la región que no
+  haya llaves desparejas o signos de pesos
 
-  C-c { -----> Inserta ´{}' y posiciona el punto entre medias
+  - C-c { :: ´{}' y posiciona el punto entre medias
 
-  C-c } -----> Avanza hasta después de la siguiente cierre de llave
-  sin apertura
+  - C-c } :: hasta después de la siguiente cierre de llave sin
+  apertura
 
-  M-x autofill-mode -----> Activa/desactiva modo autofill. Este modo es
+  - M-x autofill-mode :: Activa/desactiva modo autofill. Este modo es
   para reestructuración automática del texto, cuando se escribe y se
   llega al final de la linea se hace un salto automático.
   
-  ESC TAB -----> autocompletado especial
-  C-c <RET> -----> definir o insertar macro, precionar TAB para
+  - ESC TAB :: autocompletado especial
+  - C-c <RET> :: definir o insertar macro, precionar TAB para
                    autocompletar
-  C-c C-z -----> oculta el entorno
-  C-c C-x -----> muestra el contenido del entorno
+  - C-c C-z :: oculta el entorno
+  - C-c C-x :: muestra el contenido del entorno
 
-  C-c % tambien C-c ' -----> pasa a comentar el parrafo actual
-  C-c ; -----> comentar la seleccion
-  C-c " -----> elimina comentario parrafo
-  C-c : -----> elimina comentario desde el punto actual hasta el 
-               final del parrafo
+  - C-c % tambien C-c ' :: pasa a comentar el parrafo actual
+  - C-c ; :: comentar la seleccion
+  - C-c " :: elimina comentario parrafo
+  - C-c : :: elimina comentario desde el punto actual hasta el final
+               del parrafo
+
 ** Unididades estructurales
-   C-c C-s -----> inserta seccio del nivel acutual
-   C-u C-c C-s -----> inserta seccion de nivel inmediatamente infe-
-                      rior al actual
-   C-u 3 C-c C-s -----> inserta una subseccion. 0 indica part,
-                        1 chapter, 2 section, 3 subsection, 
-			4 subsubsection, 5 parrafo, 6 subparrafo.
+   - C-c C-s :: inserta seccio del nivel acutual
+   - C-u C-c C-s :: inserta seccion de nivel inmediatamente infe- rior
+     al actual
+   - C-u 3 C-c C-s :: inserta una subseccion. 0 indica part, 1
+     chapter, 2 section, 3 subsection, 4 subsubsection, 5 parrafo, 6
+     subparrafo.
 
 ** Formato y seleccion
-   C-c C-q C-e ------> Indentar entorno actual
-   C-c C-q C-p -----> Indentar párrafo actual
-   C-c C-q C-r -----> Indentar región
-   C-c C-q C-s -----> Indentar sección
-   C-c . -----> Seleccionar entorno
-   C-c * -----> Seleccionar sección
+   - C-c C-q C-e :: Indentar entorno actual
+   - C-c C-q C-p :: Indentar párrafo actual
+   - C-c C-q C-r :: Indentar región
+   - C-c C-q C-s :: Indentar sección
+   - C-c . :: Seleccionar entorno
+   - C-c * :: Seleccionar sección
 
 
 ** Modo reftex
-   Reftex ayuda a la manipulacion estructural y de etiquetas del documento.
+   Reftex ayuda a la manipulacion estructural y de etiquetas del
+   documento.
 
-   M-x reftex-mode -----> activa el modo reftex
-   C-c = -----> muestra estructura del documento
+   - M-x reftex-mode :: activa el modo reftex
+   - C-c = :: muestra estructura del documento
          | ? muestra un sumario con las opciones disponibles                   |
          | [0-9] Argumento prefijo. Para desplazarse varias lineas de golpe    |
          | q cierre del indice                                                 |
@@ -55,119 +56,119 @@
          | g actualiza la lista interna de titulo sin analizar de nuevo el doc |
          | r, R Analiza de nuevo el documento                                  |
 * Modo org
-  M-x org-mode -----> activa el modo org. Si el archivo tiene
-  extension "org", entonces se haber por defecto en este modo
+  - M-x org-mode :: activa el modo org. Si el archivo tiene extension
+    "org", entonces se haber por defecto en este modo
 
-  TAB -----> muestra o enseña el contenido, del encabezado en el que
-  se encuentre el cursor
+  - TAB :: muestra o enseña el contenido, del encabezado en el que se
+    encuentre el cursor
 
-  S-TAB -----> S es Shift. Oculta o muestra todo, las cabeceras y su contenido.
+  - S-TAB :: S es Shift. Oculta o muestra todo, las cabeceras y su contenido.
   
 ** Palabras claves
-   Para sangrar los encabezados
-                      #+STARTUP: indent
+   - #+STARTUP: indent :: Para sangrar los encabezados
 
 ** Enfasis y monoespaciado
-   *bold* -----> negrita
-   /italic/ -----> italica
-   _underlined_ -----> subrayado
-   =code= -----> codigo de parrafo
-   ~verbatim~ -----> cadena verbatim
+   - *bold* :: negrita
+   - /italic/ :: italica
+   - _underlined_ :: subrayado
+   - =code= :: codigo de parrafo
+   - ~verbatim~ :: cadena verbatim
 
 ** Comentarios
-   #+BEGIN_COMMENT y #+END_COMMENT -----> regiones rodeadas por estos dos 
-                                          no se exportan
-   # -----> el simbolo # mas un espacion en blanco es un comentario lineal
+   - #+BEGIN_COMMENT y #+END_COMMENT :: regiones rodeadas por estos
+     dos no se exportan
+   - # :: el simbolo # mas un espacion en blanco es un comentario
+     lineal
 ** Tablas
-   C-c | -----> Convierte en tabla la region seleccionada
-   C-c - -----> Inserta una línea horizontal bajo la fila actual. 
-               	Con prefijo argumento, la línea se crea sobre la línea actual. 
-   C-c <RET> -----> <RET> es enter. Inserta una linea horizontal bajo la fila
-                    actual, y mueve el cursor a la fila bajo la línea.
+   - C-c | :: Convierte en tabla la region seleccionada
+   - C-c - :: Inserta una línea horizontal bajo la fila actual.  Con
+     prefijo argumento, la línea se crea sobre la línea actual.
+   - C-c <RET> :: <RET> es enter. Inserta una linea horizontal bajo la
+     fila actual, y mueve el cursor a la fila bajo la línea.
 ** Exportacion
-   C-c C-e t -----> Inserta plantilla con opciones de exportaciones
+   - C-c C-e t :: Inserta plantilla con opciones de exportaciones
 
 *** Exportacion ASCII/Latin-1/UTF-8
-    C-c C-e t a y C-c C-e t A -----> exporta como un fichero ascii o
-                                     buffer temporal
-    C-c C-e t n   y   C-c C-e t N -----> como los comandos de arriba, pero
-                                         usando codigicacion Latin-1
-    C-c C-e t u   y   C-c C-e t U -----> como los comandos de arriba, pero
-                                         usando codigicacion UTF-8
+    - C-c C-e t a y C-c C-e t A :: exporta como un fichero ascii o
+      buffer temporal
+    - C-c C-e t n y C-c C-e t N :: como los comandos de arriba, pero
+      usando codigicacion Latin-1
+    - C-c C-e t u y C-c C-e t U :: como los comandos de arriba, pero
+      usando codigicacion UTF-8
 *** Exportacion html
-    C-c C-e h h -----> exporta como un fichero html 'myfile.html'
-    C-c C-e h o -----> exporta como fichero html e inmediatamente lo abre
+    - C-c C-e h h :: exporta como un fichero html 'myfile.html'
+    - C-c C-e h o :: exporta como fichero html e inmediatamente lo
+      abre
     
-    CONSEJO: cuando se exporta algun contenido que se quiere mostrar como
-    codigo o similar encerrarlo entre #+BEGIN_EXAMPLE y #+END_EXAMPLE
+    CONSEJO: cuando se exporta algun contenido que se quiere mostrar
+    como codigo o similar encerrarlo entre #+BEGIN_EXAMPLE
+    y #+END_EXAMPLE
 *** Exportacion latex y pdf
-    C-c C-e l l -----> exporta como fichero LaTeX 'myfile.tex'
-    C-c C-e l p -----> exporta a LaTeX procesado a pdf
-    C-c C-e l o -----> Exportando a LaTeX y procesando a PDF, entonces se abre
-    el fichero PDF resultan
+    - C-c C-e l l :: exporta como fichero LaTeX 'myfile.tex'
+    - C-c C-e l p :: exporta a LaTeX procesado a pdf
+    - C-c C-e l o :: Exportando a LaTeX y procesando a PDF, entonces
+      se abre el fichero PDF resultan
 
-    CONSEJO: cuando se exporta algun contenido que se quiere mostrar como
-    codigo o similar encerrarlo entre #+BEGIN_COMMENT y #+END_COMMENT
+    CONSEJO: cuando se exporta algun contenido que se quiere mostrar
+    como codigo o similar encerrarlo entre #+BEGIN_COMMENT
+    y #+END_COMMENT
 
 * Generales
-  M-h -----> seleccionar parrafo
-  M-@ -----> seleccionar la palabra
-  C-q TAB -----> Inserta un caracter de tabulacion '\t'  
-  C-q num -----> inserta caracter no imprimible. num es un numero octal
-  M-x untabify -----> quita tabulaciones en el area seleccionada
-  C-M-w -----> Anexar matanza siguiente al último lote de texto cortado.
-  C x -----> mueve, el cursor, de inicio a final y viceversa de la region
-             seleccionada
-
-  
+  - M-h :: seleccionar parrafo
+  - M-@ :: seleccionar la palabra
+  - C-q TAB :: Inserta un caracter de tabulacion '\t'  
+  - C-q num :: inserta caracter no imprimible. num es un numero octal
+  - M-x untabify :: quita tabulaciones en el area seleccionada
+  - C-M-w :: Anexar matanza siguiente al último lote de texto cortado.
+  - C x :: mueve, el cursor, de inicio a final y viceversa de la
+    region seleccionada
 
 ** Acumulacion de texto
-   M-x append-to-buffer -----> añadir region seleccionada al contenido de un 
+   - M-x append-to-buffer :: añadir region seleccionada al contenido de un 
                                buffer específico. Pone el texto DESPUES del la
 			       ubicacion del cursor en el buffer especifico.
-   M-x prepend-to-buffer -----> añadir region seleccionada al contenido de un 
+   - M-x prepend-to-buffer :: añadir region seleccionada al contenido de un 
                                 buffer específico. Pone el texto ANTES del la
 			        ubicacion del cursor en el buffer especifico.
-   M-x copy-to-buffer -----> Copiar region dentro de buffer especifico, 
+   - M-x copy-to-buffer :: Copiar region dentro de buffer especifico, 
                               eliminando antes el contenido de éste.
-   M-x insert-buffer -----> Insertar el contenido de un buffer especifico dentro
+   - M-x insert-buffer :: Insertar el contenido de un buffer especifico dentro
                             del buffer actual en el punto actual.
-   M-x append-to-file -----> añadir region al contenido de un archivo especifico
+   - M-x append-to-file :: añadir region al contenido de un archivo especifico
                              al final.
 ** Macros
-   C-x ( -----> Inicia la grabación de una macro
-   C-x ) -----> finaliza la grabación de una macro
-   M-x edit-name-kbd-macro -----> edita macro (con nombre)
-   M-x edit-last-kbd-macro -----> edita la ultima macro
-   C-u C-x ( -----> ejecuta y permite añadir comandos
-   C-x C-k n -----> nombre a una macro. Esta es la función
-                    name-last-kbd-macro
-   M-x edit-kbd-macro -----> pregunta si:
+   - C-x ( :: Inicia la grabación de una macro
+   - C-x ) :: finaliza la grabación de una macro
+   - M-x edit-name-kbd-macro :: edita macro (con nombre)
+   - M-x edit-last-kbd-macro :: edita la ultima macro
+   - C-u C-x ( :: ejecuta y permite añadir comandos
+   - C-x C-k n :: nombre a una macro. Esta es la función
+     name-last-kbd-macro
+   - M-x edit-kbd-macro :: pregunta si:
                              * Editar macros
 			     * Ultima macro (C-x e),
 			       las últimas 100 (C-x l),
 			       o secuencias de teclas personalizada
-   C-x q -----> pregunta si continua ejecución			       
-   
+   - C-x q :: pregunta si continua ejecución			       
 
 
 ** Seleccion Rectangular
-C-x r k -----> elimina un rectángulo.
-C-x r y -----> pega un rectángulo.
-C-x r o -----> crea un rectángulo como el seleccionado previamente 
-               sin contenido, abre un área.
-C-x r c -----> rellena con espacios el rectángulo seleccionado, sin borrar
-               su desplazamiento pero sí su contenido.
-C-x r d -----> elimina un rectángulo seleccionado, incluyendo su desplazamiento
-               y su contenido.
-C-x r r [a-z0-9] -----> copia el rectángulo a un registro, que puede ser usado
-                        posteriormente, los registros validos son cualquier
-                        carácter alfanumérico.
-C-x r i -----> inserta el contenido de un registro.
-C-x r t -----> rellena con un carácter o cadena un rectángulo. Además el
-               rectángulo puede redimensionarse en caso de que el ancho
-	       exceda las dimensiones del rectángulo.
-
+   - C-x r k :: elimina un rectángulo.
+   - C-x r y :: pega un rectángulo.
+   - C-x r o :: crea un rectángulo como el seleccionado previamente
+     sin contenido, abre un área.
+   - C-x r c :: rellena con espacios el rectángulo seleccionado, sin
+     borrar su desplazamiento pero sí su contenido.
+   - C-x r d :: elimina un rectángulo seleccionado, incluyendo su
+     desplazamiento y su contenido.
+   - C-x r r [a-z0-9] :: copia el rectángulo a un registro, que puede
+     ser usado posteriormente, los registros validos son cualquier
+     carácter alfanumérico.
+   - C-x r i :: inserta el contenido de un registro.
+   - C-x r t :: rellena con un carácter o cadena un rectángulo. Además
+     el rectángulo puede redimensionarse en caso de que el ancho
+     exceda las dimensiones del rectángulo.
+	       
 * Expresion regular
 ** practica
 .*\"\(\w+\)\" />
