@@ -1,0 +1,25 @@
+#+TITLE: Comandos del programa de consola 'psql' para administracion de postgresql9.4
+#+AUTHOR:    Wilson S. Tubín
+* Gestion de usuario
+** con psql no inciada y loguiado como usuario postgres
+   - createuser wadmin :: crear el usuario 'wadmin'
+   - createdb midb :: crear base de datos
+   - createdb -O wadmin bodega "mi bd para bodega" :: crear db al usuario
+     wadminq y agregando una descripcion.
+   - dropdb midb :: elimina la base de datos 'midb'
+
+** con psql iniciada
+   - alter user wadmin with password 'password' :: cambiar contaseña al
+        usuario wadmin
+
+* Conexion 
+  - psql -U wadmin -W -h localhost midb :: abre, con psql, una base de
+       datos con el usuario 'wadmin' y base de datos 'midb' (usuario
+       postgres no logeado)
+  - psql midb :: abre la bd 'midb' (usuario postgres logueado)
+
+* Psql
+  - \d :: mostrar tabla
+  - \l :: mostrar bases de datos
+  - \d <table> :: muestra columnas de 'table'
+  - \dg :: muestra los roles

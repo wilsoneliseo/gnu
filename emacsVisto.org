@@ -25,6 +25,7 @@
   - C-c " :: elimina comentario parrafo
   - C-c : :: elimina comentario desde el punto actual hasta el final
                del parrafo
+  - C-c C-i :: ayuda de aucTeX	     
 
 ** Unididades estructurales
    - C-c C-s :: inserta seccio del nivel acutual
@@ -85,6 +86,456 @@
      prefijo argumento, la línea se crea sobre la línea actual.
    - C-c <RET> :: <RET> es enter. Inserta una linea horizontal bajo la
      fila actual, y mueve el cursor a la fila bajo la línea.
+   - C-c ^ :: muestra un menu en el cual se podra ordenar alfabetica,
+              numéricamente la columna actual.
+		 
+
+*** Columas con anchura definida
+    colocar al principio de la columna <n>, indica que esa columna
+    permite n caracteres de anchura. Las filas que sobrepasen los n
+    caracteres seran ocultados. '=>' indica que hay texto oculto. 
+
+    Para visualizar el texto oculto ponga el puntero sobre el
+    campo. Se mostrara el contenido en una ventana emergente.
+
+    Para editar el texto oculto haga C-c `
+
+    Al terminar de editar haga C-c C-c.
+
+*** Grupos de columnas
+    Cuando Org exporta tablas, lo hace de forma predeterminada sin
+    líneas verticales, ya que es visualmente más satisfactorio en
+    general.  Para especificar grupos de columnas, puede utilizar una
+    fila especial donde el primer campo contiene sólo '/'.  Los campos
+    adicionales pueden contener '<' para indicar que esta columna debe
+    comenzar un grupo, '>' para indicar el final de una columna, o
+    '<>' (no hay espacio entre '<' y '>') para hacer una Columna un
+    grupo propio.  Los límites entre los grupos de columnas serán
+    marcados con líneas verticales.  Aquí hay un ejemplo:
+ | N | N^2 | N^3 | N^4 | sqrt(n) | sqrt[4](N) |
+ |---+-----+-----+-----+---------+------------|
+ | / |   < |     |   > |       < |          > |
+ | 1 |   1 |   1 |   1 |       1 |          1 |
+ | 2 |   4 |   8 |  16 |  1.4142 |     1.1892 |
+ | 3 |   9 |  27 |  81 |  1.7321 |     1.3161 |
+ |---+-----+-----+-----+---------+------------|
+
+*** El modo menor orgtbl
+    Si te gusta la forma intuitiva en que funciona el editor de la
+    tabla Org, también puedes usarlo en otros modos como el modo Texto
+    o el modo Correo.  El modo Orgtbl de modo menor lo hace posible.
+    Siempre puede alternar el modo con M-x orgtbl-mode RET.
+
+*** La hoja de calculo
+    El editor de tablas hace uso del paquete Emacs calc para
+    implementar capacidades similares a la hoja de cálculo.  También
+    puede evaluar formularios Emacs Lisp para derivar campos de otros
+    campos. Hay un depurador de fórmulas y un editor de fórmulas con
+    características para resaltar los campos de la tabla
+    correspondientes a las referencias en el punto de la fórmula.
+
+**** Referencias: Como referirse a otro campo o rango
+     En Org, los campos se pueden referenciar por nombre, por
+     coordenadas absolutas y por coordenadas relativas. Para averiguar
+     cuáles son las coordenadas de un campo, presione C-c ?  en ese
+     campo, o presione C-c } para alternar la visualización de una
+     cuadrícula.
+
+***** Referencias de campo
+     Generalmente las hojas de calculo utilizan letra/numero para
+     referenciar. Sin embargo, Org prefiere usar otra representación
+     más general que se parece a esto:
+                              @fila$columna
+
+     Las referencias de columna pueden ser absolutas como $1, $2,
+     ... $N, o relativas a la columna actual como $+1 o $-2.  $< y $>
+     son referencias inmutables a la primera y última columna,
+     respectivamente, y puede usar $ >>> para indicar la tercera
+     columna de la derecha.
+
+     La especificación de filas sólo cuenta las líneas de datos e
+     ignora las líneas de separación horizontal (hlines).  Al igual
+     que con las columnas, puede utilizar números de fila absolutos
+     @1, @2, ... @N y números de fila relativos a la columna actual
+     como @+3 o @-1.  @< y @> son referencias inmutables la primera y
+     última fila de la tabla, respectivamente.  También puede
+     especificar la fila relativa a uno de los hlines: @I se refiere a
+     la primera hline, @II a la segunda, etc. @-I se refiere a la
+     primera de estas líneas por encima de la línea actual, @+I a la
+     primera Línea debajo de la línea actual.  También puede escribir
+     @III+2, que es la segunda línea de datos después del tercer hline
+     de la tabla.
+
+     @0 y $0 se refieren a la fila y columna actuales,
+     respectivamente, es decir, a la fila/columna del campo que se
+     está calculando.  Además, si omite la columna o la parte de fila
+     de la referencia, la fila/columna actual está implícita.
+
+     Las referencias de Org con números sin signo son referencias
+     fijas en el sentido de que si utiliza la misma referencia en la
+     fórmula para dos campos diferentes, se hará referencia al mismo
+     campo cada vez.  Las referencias de Org con números firmados son
+     referencias flotantes porque el mismo operador de referencia
+     puede hacer referencia a diferentes campos dependiendo del campo
+     que se calcula mediante la fórmula.
+     
+     Aqui estan unos pocos ejemplos:
+
+     - @2$3 :: segunda fila, tercera columna (igual que C2) 
+     - $5 :: columna 5 en la fila actual (igual que E&) 
+     - @2 :: actual columna, fila 2 
+     - @-1$-3 :: el campo una fila arriba, tres columnas a la izquierda 
+     - @-I$2 :: campo justo debajo de hline por encima de la fila
+                actual, la columna 2
+     - @>$5 :: campo en la última fila, en la columna 5
+
+***** Referencias de rango
+      Puede hacer referencia a un rango rectangular de campos
+      especificando dos referencias de campo conectadas por dos puntos
+      '..'.  Si ambos campos están en la fila actual, simplemente
+      puede usar '$2..$7', pero si al menos un campo está en una fila
+      diferente, debe utilizar el formato general @fila$columna al
+      menos para el primer campo (Es decir, la referencia debe empezar
+      por '@' para ser interpretada correctamente).  Ejemplos:
+
+      - $1..$3 :: primeros tres campos en la fila actual
+      - $P..$Q :: rango, usando nombres de columnas (ver bajo
+                  Avanzado)
+      - $<<<..$>> :: Comience en la tercera columna, continúe hasta la
+                     última
+      - @2$1@..@4$3 :: seis campos entre estos dos campos (igual que
+		       A2..C4)
+      - @-1$-2..@-1 :: tres campos en la fila arriba, a partir de 2
+		       columnas a la izquierda
+      - @I..II :: entre Primer y segundo hline, abreviatura de @I..@II
+
+***** Coordenadas de campo en fórmulas
+      Para las fórmulas de Calc y las fórmulas de Lisp, @# y $# se
+      puede usar para obtener el número de fila o columna del campo
+      donde se va el resultado de la fórmula.  Los equivalentes
+      tradicionales de la fórmula Lisp son org-table-current-dline y
+      org-table-current-column.  Ejemplos:
+      
+      - if(@# % 2, $#, string("")) :: Número de columna sólo en líneas impares
+
+      - $3 = remote(FOO, @@#$2) :: Copiar la columna 2 de la tabla FOO
+           en la columna 3 de la tabla actual
+
+      Para el segundo ejemplo, la tabla FOO debe tener al menos tantas
+      filas como la tabla actual.  Tenga en cuenta que esto es
+      ineficiente para un gran número de filas.
+
+***** Referencias con nombre
+      '$Nombre' se interpreta como el nombre de una columna, parámetro
+      o constante.  Las constantes se definen globalmente a través de
+      la opción org-table-formula-constants y localmente (para el
+      archivo) a través de una línea como
+      
+      #+CONSTANTS: c=299792458. pi=3.14 eps=2.4e-6
+
+
+**** Sintaxis de fórmulas para Calc: Uso de Calc en la computadora
+     Una fórmula puede ser cualquier expresión algebraica entendida
+     por el paquete de Emacs Calc.  Tenga en cuenta que calc tiene la
+     convención no estándar que '/' tiene menor precedencia que '*',
+     por lo que 'a / b * c' se interpreta como 'a / (b * c)'.  Antes
+     de la evaluación por calc-eval (ver calc-eval), la sustitución de
+     la variable tiene lugar de acuerdo con las reglas descritas
+     anteriormente.  Los vectores de rango pueden ser alimentados
+     directamente a las funciones vectoriales de Calc como 'vmean' y
+     'vsum'.
+
+     Una fórmula puede contener una cadena de modo opcional después de
+     un punto y coma.  Esta cadena consta de indicadores para influir
+     en Calc y otros modos durante la ejecución.  De forma
+     predeterminada, Org utiliza los modos Calc estándar (precisión
+     12, unidades angulares grados, fracción y modos simbólicos
+     desactivados).  El formato de visualización, sin embargo, se ha
+     cambiado a (float 8) para mantener las tablas compactas.  La
+     configuración predeterminada se puede configurar mediante la
+     opción org-calc-default-modes.
+
+     Lista de modos:
+
+     - p20 :: Establezca la precisión del cálculo Calc interno en 20
+              dígitos.
+
+     - n3, s3, e2, f4 :: Normal, científico, de ingeniería o formato
+                         fijo del resultado de Calc pasado de nuevo a
+                         Org.  El formato de Calc es ilimitado en la
+                         precisión siempre y cuando la precisión del
+                         cálculo Calc sea mayor.
+
+     - D, R :: Grado y ángulo de radianes de Calc.
+
+     - F, S :: Fraction and symbolic modes of Calc. 
+
+     - T, t :: Duration computations in Calc or Lisp, see Durations and time values. 
+
+     - E :: Si y cómo considerar los campos vacíos.  Sin 'E' los
+             campos vacíos en las referencias de rango se suprimen
+             para que el vector Calc o la lista Lisp contengan sólo
+             los campos no vacíos.  Con 'E' se guardan los campos
+             vacíos.  Para los campos vacíos en rangos o referencias
+             de campos vacíos, el valor 'nan' (no un número) se
+             utiliza en fórmulas Calc y la cadena vacía se utiliza
+             para las fórmulas Lisp.  Añadir 'N' para utilizar 0 en
+             lugar de ambos tipos de fórmula.  Para el valor de un
+             campo, el modo 'N' tiene mayor precedencia que 'E'.
+
+     - N :: Interprete todos los campos como números, use 0 para
+            no-números.  Vea la siguiente sección para ver cómo esto
+            es esencial para los cálculos con fórmulas Lisp.  En
+            fórmulas de Calc se utiliza sólo ocasionalmente porque las
+            cadenas de números ya se interpretan como números sin 'N'.
+
+     - L :: Literal, sólo para fórmulas Lisp.  Vea la siguiente
+            sección.
+
+     A menos que utilice números enteros grandes o cálculo de alta
+     precisión y visualización para números de coma flotante, también
+     puede proporcionar un especificador de formato 'printf' para
+     reformatear el resultado de Calc después de que se haya pasado de
+     nuevo a Org en lugar de dejar que Calc ya haga el formato.
+     Algunos ejemplos:
+
+     - $1+$2 :: Suma del primer y segundo campo 
+     - $1+$2;%2f ::Mismo, resultado del formato a dos decimales 
+     - exp($2)+exp($1) :: Funciones matemáticas se pueden usar 
+     - $0;%1f :: Reformatear la celda actual a 1 decimal 
+     - ($3)-32)*5/9 :: grados F -> C conversión 
+     - $c/$1/$cm :: Hz -> cm conversión, utilizando constantes.el 
+     - tan($1);Dp3s1 :: Calcular en grados, precisión 3, mostrar SCI 1 
+     - sin($1);Dp3%.1e :: Igual, pero use printf especificador para display 
+     - taylor($3,x=7,2) :: Serie de Taylor de $3, en x = 7, segundo grado
+
+     Calc también contiene un conjunto completo de operaciones
+     lógicas, (véase Operaciones lógicas).  Por ejemplo
+
+     - if($1 < 20, teen, string("")) :: "Adolescente" si la edad $1 es
+          menor que 20, de lo contrario el campo de resultado de la
+          tabla Org se establece en vacío con la cadena vacía.
+
+     - if("$1" == "nan" || "$2" == "nan", string(""), $1 + $2); E f-1 :: 
+	  Suma de las dos primeras columnas.  Cuando al menos
+          uno de los campos de entrada está vacío, el campo de
+          resultado de la tabla Org se establece en vacío.  'E' es
+          necesario para no convertir los campos vacíos a 0. 'f-1' es
+          una cadena de formato Calc opcional similar a '% .1f' pero
+          deja los resultados vacíos vacíos.
+
+**** Fórmulas de campo y rango: Fórmula para campos específicos (rangos de)
+     Para asignar una fórmula a un campo en particular, escríbala
+     directamente en el campo, precedida de ':=', por ejemplo
+     ':=vsum(@II..III)'.  Al presionar <TAB> o <RET> o C-c C-c con el
+     cursor todavía en el campo, la fórmula se almacenará como fórmula
+     para este campo, se evaluará y el campo actual se reemplazará con
+     el resultado.
+
+     Las fórmulas se almacenan en una línea especial que comienza con
+     '#+TBLFM:' directamente debajo de la tabla.  Si escribe la
+     ecuación en el campo 4 de la tercera línea de datos de la tabla,
+     la fórmula se verá como '@3$4=$1+$2'.  Al
+     insertar/eliminar/intercambiar columnas y filas con los comandos
+     apropiados, las referencias absolutas (pero no las relativas) en
+     las fórmulas almacenadas se modifican para seguir haciendo
+     referencia al mismo campo.  Para evitar que esto suceda, en
+     particular en las referencias de rangos, ancla rangos en los
+     bordes de la tabla (usando @<, @>, $<, $>), o en hlines usando
+     la notación @I.  La adaptación automática de las referencias de
+     campo, por supuesto, no sucede si edita la estructura de la tabla
+     con comandos de edición normales; entonces debe fijar las
+     ecuaciones usted mismo.
+
+     En lugar de escribir una ecuación en el campo, también puede
+     utilizar el siguiente comando
+     - C-u C-c = (org-table-eval-formula) :: Instale una nueva fórmula
+          para el campo actual.  El comando solicita una fórmula con
+          el valor predeterminado tomada de la línea '# + TBLFM:', la
+          aplica al campo actual y la almacena.
+
+     El lado izquierdo de una fórmula también puede ser una expresión
+     especial para asignar la fórmula a un número de campos
+     diferentes.  No hay ningún método abreviado de teclado para
+     introducir fórmulas de intervalo.  Para agregarlos, utilice el
+     editor de fórmulas (consulte Edición y depuración de fórmulas) o
+     edite la línea # + TBLFM: directamente.
+
+     - $2= :: Fórmula de columna, válida para toda la columna.  Esto
+              es tan común que Org trata estas fórmulas de una manera
+              especial, vea Fórmulas de columna.
+
+     - @3= :: La fórmula de fila se aplica a todos los campos de la
+              fila especificada.  @>= Significa la última fila.
+
+     - @1$2..@4$3= :: La fórmula de rango se aplica a todos los campos
+                       del rango rectangular dado.  Esto también se
+                       puede utilizar para asignar una fórmula a
+                       algunos pero no a todos los campos en una fila.
+
+     - $name= :: En el campo Nombre, consulte Funciones avanzadas.
+
+
+**** Fórmulas de columna: Fórmulas válidas para una columna completa
+     Cuando se asigna una fórmula a una referencia de columna simple
+     como $3 =, se usará la misma fórmula en todos los campos de esa
+     columna, con las siguientes excepciones muy convenientes: (i) Si
+     la tabla contiene líneas horizontales separadoras con filas
+     arriba y abajo, Todo antes del primer hline como se considera
+     parte del encabezado de la tabla y no será modificado por
+     fórmulas de columna.  Por lo tanto, un encabezado es obligatorio
+     cuando se utilizan fórmulas de columna y se desea agregar hlines
+     a filas de grupo, como por ejemplo para separar una fila total en
+     la parte inferior de las filas de sumando anteriores.  (ii) Los
+     campos que ya obtienen un valor de una fórmula de campo/rango
+     quedarán solos por fórmulas de columna.  Estas condiciones hacen
+     que las fórmulas de columna sean muy fáciles de usar.
+
+     Para asignar una fórmula a una columna, escríbala directamente en
+     cualquier campo de la columna, precedida por un signo igual, como
+     '= $ 1 + $ 2'.  Cuando presiona <TAB> o <RET> o C-c C-c con el
+     cursor todavía en el campo, la fórmula se almacenará como fórmula
+     para la columna actual, se evaluará y el campo actual se
+     reemplazará con el resultado.  Si el campo contiene sólo '=', se
+     utiliza la fórmula previamente almacenada para esta columna.
+     Para cada columna, Org sólo recordará la fórmula utilizada más
+     recientemente.  En la línea '#+TBLFM:', las fórmulas de columna
+     se verán como '$4=$1+$2'.  El lado izquierdo de una fórmula de
+     columna no puede ser el nombre de la columna, debe ser la
+     referencia de columna numérica o $>.
+
+     En lugar de escribir una ecuación en el campo, también puede
+     utilizar el siguiente comando:
+
+     - C-c = :: (org-table-eval-formula). Instale una nueva fórmula
+                para la columna actual y reemplace el campo actual con
+                el resultado de la fórmula.  El comando solicita una
+                fórmula, con el valor predeterminado tomado de la
+                línea '# + TBLFM', lo aplica al campo actual y lo
+                almacena.  Con un argumento de prefijo numérico, por
+                ejemplo, C-5 C-c =, el comando lo aplicará a muchos
+                campos consecutivos de la columna actual.
+
+**** Edición y depuración de fórmulas
+     Puede editar fórmulas individuales en el minibúfer o directamente
+     en el campo.  Org también puede preparar un buffer especial con
+     todas las fórmulas activas de una tabla.  Al ofrecer una fórmula
+     para la edición, Org convierte las referencias al formato
+     estándar (como B3 o D&) si es posible.  Si prefiere trabajar sólo
+     con el formato interno (como @3$2 o $4), configure la opción
+     org-table-use-standard-references.
+
+     - C-c = or C-u C-c = (org-table-eval-formula) :: Edite la fórmula
+          asociada con la columna/campo actual en el minibúfer.
+          Consulte Fórmulas de columna y Fórmulas de campo y rango.
+
+     - C-u C-u C-c = (org-table-eval-formula) :: Vuelva a insertar la
+          fórmula activa (ya sea una fórmula de campo o una fórmula de
+          columna) en el campo actual, para que pueda editarlo
+          directamente en el campo.  La ventaja sobre la edición en el
+          minibúfer es que usted puede utilizar el comando C-c ?.
+
+     - C-c ?  (org-table-field-info) :: Al editar una fórmula en un
+          campo de tabla, resalte el campo o campos a los que hace
+          referencia la referencia en la posición del cursor en la
+          fórmula.
+
+     - C-c } :: Alternar la visualización de los números de fila y
+                columna de una tabla, utilizando superposiciones
+                (org-table-toggle-coordinate-overlays).  Éstos se
+                actualizan cada vez que la tabla está alineada; Usted
+                puede forzarlo con C-c C-c.
+
+     - C-c { :: Activa y desactiva el depurador de fórmulas
+                (org-table-toggle-formula-debugger).  Vea abajo.
+
+     - C-c ' (org-table-edit-formulas) :: Edite todas las fórmulas
+          para la tabla actual en un búfer especial, donde las
+          fórmulas se mostrarán una por línea.  Si el campo actual
+          tiene una fórmula activa, el cursor en el editor de fórmulas
+          lo marcará.  Mientras esté dentro del búfer especial, Org
+          mostrará automáticamente cualquier referencia de campo o
+          rango en la posición del cursor.  Puede editar, eliminar y
+          agregar fórmulas y utilizar los siguientes comandos:
+	  - C-c C-c or C-x C-s (org-table-fedit-finish) :: Salga del
+               editor de fórmulas y guarde las fórmulas modificadas.
+               Con el prefijo C-u, también aplique las nuevas fórmulas
+               a toda la tabla.
+	  - C-c C-q (org-table-fedit-abort) :: Salga del editor de
+               fórmulas sin instalar cambios.
+	  - C-c C-r (org-table-fedit-toggle-ref-type) :: Alternar
+               todas las referencias en el editor de fórmulas entre
+               estándar (como B3) e interno (como @ 3 $ 2).
+	  - <TAB> (org-table-fedit-lisp-indent) :: Pretty-print o
+               indent fórmula Lisp en el punto.  Cuando en una línea
+               que contenga una fórmula Lisp, formatee la fórmula de
+               acuerdo con las reglas de Emacs Lisp.  Otro <TAB>
+               vuelve a colapsar la fórmula.  En la fórmula abierta,
+               <TAB> vuelve a sangrarse como en el modo Emacs Lisp.
+	  - M-<TAB> (lisp-complete-symbol) :: Complete Lisp symbols,
+               just like in Emacs Lisp mode.
+	  - S-<up>/<down>/<left>/<right> :: Cambie la referencia en el
+               punto.  Por ejemplo, si la referencia es B3 y presiona
+               S- <derecha>, se convertirá en C3.  Esto también
+               funciona para referencias relativas y para referencias
+               de hline.
+	  - M-S-<up>     (org-table-fedit-line-up) :: 
+	  - M-S-<down> (org-table-fedit-line-down) :: Move the test
+               line for column formulas in the Org buffer up and down.
+	  - M-<up>     (org-table-fedit-scroll-down) :: 
+	  - M-<down> (org-table-fedit-scroll-up) :: Desplácese por la
+               ventana que muestra la tabla.
+	  - C-c } :: Activar y desactivar la cuadrícula de coordenadas de la tabla.
+     
+     Hacer un campo de tabla en blanco no elimina la fórmula asociada
+     con el campo, ya que se almacena en una línea diferente (la línea
+     '# + TBLFM') -durante el próximo recálculo el campo se rellenará
+     de nuevo.  Para quitar una fórmula de un campo, debe dar una
+     respuesta vacía cuando se le solicite la fórmula o editar la
+     línea '# + TBLFM'.
+
+     Puede editar el '# + TBLFM' directamente y volver a aplicar las
+     ecuaciones cambiadas con C-c C-c en esa línea o con los comandos
+     normales de recalculación de la tabla.
+***** Depurando formulas
+      Cuando la evaluación de una fórmula conduce a un error, el
+      contenido del campo se convierte en la cadena '#ERROR'.  Si
+      desea ver lo que sucede durante la sustitución de variables y el
+      cálculo para encontrar un error, active la depuración de
+      fórmulas en el menú Tbl y repita el cálculo, por ejemplo,
+      presionando C-u C-c = <RET> en un campo.  Se mostrará
+      información detallada.
+
+**** Actualización de la tabla
+     El recalculo de una tabla normalmente no es automático, pero debe
+     ser activado por un comando.  Consulte Funciones avanzadas, para
+     obtener una forma de realizar el recálculo al menos
+     semiautomático.
+
+     Para recalcular una línea de una tabla o toda la tabla, utilice
+     los siguientes comandos:
+
+     - C-c * (org-table-recalculate) :: Vuelva a calcular la fila
+          actual aplicando primero las fórmulas de columna almacenadas
+          de izquierda a derecha y todas las fórmulas de campo / rango
+          en la fila actual.
+
+     - C-u C-c * :: 
+     - C-u C-c C-c :: Recompute toda la tabla, línea por línea.  Las
+                      líneas antes del primer hline se dejan solas,
+                      suponiendo que éstas forman parte del encabezado
+                      de la tabla.
+     - C-u C-u C-c * or C-u C-u C-c C-c (org-table-iterate) :: Itere
+          la tabla recalculándola hasta que no se produzcan cambios
+          adicionales.  Esto puede ser necesario si algunos campos
+          calculados usan el valor de otros campos que se calculan más
+          adelante en la secuencia de cálculo.
+     - M-x org-table-recalculate-buffer-tables RET :: Recompuesta
+          todas las tablas en el búfer actual.
+     - M-x org-table-iterate-buffer-tables RET :: Iterar todas las
+          tablas en el búfer actual, con el fin de converger las
+          dependencias de tabla a tabla.
+     
 ** Exportacion
    - C-c C-e t :: Inserta plantilla con opciones de exportaciones
 
@@ -114,6 +565,7 @@
     y #+END_COMMENT
 
 * Generales
+** Varios
   - M-h :: seleccionar parrafo
   - M-@ :: seleccionar la palabra
   - C-q TAB :: Inserta un caracter de tabulacion '\t'  
@@ -122,7 +574,9 @@
   - C-M-w :: Anexar matanza siguiente al último lote de texto cortado.
   - C x :: mueve, el cursor, de inicio a final y viceversa de la
     region seleccionada
-
+  - C-x RET f :: seleccionar el codigo de caracteres a utilizar para
+                 guardar el buffer actual, por ejemplo, guardar texto
+                 para windows y no para unix.
 ** Acumulacion de texto
    - M-x append-to-buffer :: añadir region seleccionada al contenido de un 
                                buffer específico. Pone el texto DESPUES del la
@@ -151,7 +605,6 @@
 			       o secuencias de teclas personalizada
    - C-x q :: pregunta si continua ejecución			       
 
-
 ** Seleccion Rectangular
    - C-x r k :: elimina un rectángulo.
    - C-x r y :: pega un rectángulo.
@@ -168,7 +621,59 @@
    - C-x r t :: rellena con un carácter o cadena un rectángulo. Además
      el rectángulo puede redimensionarse en caso de que el ancho
      exceda las dimensiones del rectángulo.
-	       
+
+** Directorios
+   Los siguientes comandos son para cuando se abre un directorio en un
+   buffer con el comando C-x d <DIR>.
+*** Operacion
+    - C :: Copiar a..
+    - R :: Renombrar archivo actual
+    - D :: Eliminar archivo actual
+    - Z :: Comprimir archivo actual
+    - C-t d :: ver imagen (probado y funciona en modo grafico)
+*** Marcar
+    - m :: marcar archivo actual
+    - u :: desmarcar archivo actual
+    - U :: desmarcar todos los elementos marcados
+    - t :: los marcados los desmarca y los desmarcados los marca
+    - M-} :: pasar a la siguiente marca
+    - M-{ :: regresar a la anterior marca
+    - ** :: marca los archivos con permiso de ejecucion
+*** regexp
+    - % g :: marcar lo que contenga...
+    - % m :: marcar..
+    - % d :: bandera..
+    - % C :: copiar..
+    - % R :: renombrar..
+*** Inmediato
+    - C-x C-q :: entra a otro modo para cambiar el nombre de los
+                 archivos
+    - + :: crear carpeta
+    - M-= :: comparar este archivo con su backup (~)
+    - o :: abrir archivo en otra ventana
+    - v :: ver archivo
+    - g :: refrescar
+    - C-t i :: ver imagen (probado y funciona en modo grafico)
+    - C-t x :: ver imagen en ventana diferente (consola)
+*** Subdir
+    - i :: insertar este directorio en el buffer
+    - > :: siguiente directorio
+    - < :: anterior directorio
+    - C-M n :: siguiente subdirectorio
+    - C-M p :: anterior subdirectorio
+    - M ^ :: directorio superior
+    - $ :: mostrar/ocultar el subdirectorio
+    - M-$ :: mostrar todos los subdirectorios
+** Buffer List
+   Los siguientes comandos son cuando se habre un buffer que contiene
+   una lista de bufferes abiertos en la sesion actual de emacs. Es
+   decir el buffer que se abre cuando se ejecuta C-x C-b
+
+   - C-k :: marcar para eliminar
+   - s :: marcar para guardar
+   - x :: ejecutar
+   - g :: refrescar
+   - q :: salir
 * Expresion regular
 ** practica
 .*\"\(\w+\)\" />
@@ -193,3 +698,112 @@ $ final de linea
 [:xdigit:] an hexadecimal digit
 [:cntrl:]  a control character
 [:ascii:]  an ascii character
+
+* Programacion
+** Funciones
+   + C-M-a :: Va al comienzo de la funcion actual o precedente
+              (beginning-of-defun).
+
+   + C-M-e :: Va al final de la funcion actual o siguiente (end-of-defun).
+
+   + C-M-h :: Pone la región alrededor de la funcion entera actual o
+              siguiente (mark-defun).
+
+   + M-x which-function-mode :: modo adjunto que muestra el nombre de
+       	la función actual en la línea de modo, actualizándolo a medida
+       	que ud. se mueve por el búfer. Afecta a todos los buffers.
+
+** Sangrias
+   + TAB :: Ajusta la sangría de la línea actual.
+
+   + C-j :: Equivale a RET seguido de TAB (newline-and-indent)
+
+   + C-M-q :: Resangra todas las líneas dentro de un agrupamiento por
+              paréntesis (indent-sexp).
+
+   + C-M-\ :: Resangra todas las líneas de la región (indent-region).
+
+   + C-u TAB :: Desplaza rígidamente hacia el costado un agrupamiento
+                por paréntesis completo para que su primera línea
+                quede correctamente sangrada.
+
+   + M-x indent-code-rigidly :: Desplaza rígidamente hacia el costado
+        todas las líneas de la región, pero no altera las líneas que
+        comienzan dentro de comentarios y cadenas.
+
+** Comentarios
+   + M-; :: Inserta o realinea el comentario de la línea actual; por
+            otra parte, comenta o descomenta la región (comment-dwim).
+
+   + C-u M-; :: Mata el comentario de la línea actual (comment-kill).
+
+   + C-x ; :: Define la columna de comentario (comment-set-column).
+
+   + C-M-j :: Como RET seguido por insertar y alinear un comentario
+              (comment-indent-new-line).
+
+   + M-x comment-region :: Añade o quita los delimitadores de
+        comentarios de todas las líneas de la región.
+
+** Editar parentesis
+*** Expresiones con parantesis balanceados
+    + C-M-f :: Avanza sobre una expresión balanceada (forward-sexp).
+
+    + C-M-b :: Retrocede sobre una expresión balanceada (backward-sexp).
+
+    + C-M-k :: Mata una expresión balanceada hacia adelante (kill-sexp).
+
+    + C-M-DEL :: Mata una expresión balanceada hacia atrás (backward-kill-sexp).
+
+    + C-M-t :: Transpone expresiones (transpose-sexps).
+
+    + C-M-@ :: Pone la marca después de la siguiente expresión (mark-sexp).
+
+*** Movimiento por la estructura de parentesis
+    + C-M-n :: Avanza sobre un agrupamiento por paréntesis (forward-list).
+
+    + C-M-p :: Retrocede sobre un agrupamiento por paréntesis (backward-list).
+
+    + C-M-u :: Sube en la estructura de paréntesis (backward-up-list).
+
+    + C-M-d :: Baja en la estructura de paréntesis (down-list).
+
+*** Resaltar parejas de parentesis
+    + M-x show-paren-mode :: Habilita el modo show-paren-mode. Siempre
+         que el punto está después de un delimitador de cierre, ese
+         delimitador y su correspondiente delimitador de apertura son
+         resaltados; en caso contrario, si el punto está delante de un
+         delimitador de apertura, se resalta el delimitador de cierra
+	 
+
+
+*** Otras cosas con parentesis
+    + M-( :: inserta dos parentesis y deja el cursor en medio
+    + M-) :: cuando esta dentro de un juego de parentesis, salta a la
+             siguiente linea.
+* Limitar
+   Limitar quiere decir concentrarse en alguna porción del búfer,
+   volviendo inaccesible el resto temporalmente. La porción a la cual
+   sigue accediendo se llama /*porción accesible*/. Cancelar la
+   limitación, volviendo accesible otra vez el búfer entero, se llama
+   /*ensanchar*/. La cantidad de limitación en efecto para un búfer en un
+   instante dado se llama restricción del búfer.
+
+   La limitación puede facilitar concentrarse en una sola subrutina o
+   párrafo eliminando estorbos visuales. También puede servir para
+   restringir el intervalo de operación de un comando de reemplazamiento
+   o una macro de teclado repetitiva.
+
+   - C-x n n :: Limitar a la región entre punto y marca
+                (narrow-to-region).
+   - C-x n w :: Ensanchar para volver accesible otra vez al búfer
+                entero (widen).
+* Calculadora
+  - C-x * c :: Modo calculadora
+  - C-x * t :: Lanzar tutoral
+  - C-x * q :: Quick mode. Calculadora rapida sin tantas funciones
+  - C-x * k :: Keypad mode. Activar/desactivar el keypad o teclado,
+                desde el cual se puede usar el raton y pulsar en el
+                directamente
+  - C-x * b :: activar el keypad mode en modo full o lo que es lo
+               mismo llamando a la funcion M-x full-calc-keypad

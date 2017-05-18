@@ -12,6 +12,11 @@
                   estan agregados al repositorio
   - git add archivo :: agregar "archivo" al repositorio
   - git add -A :: agregar todos los archivos
+  - git add -u :: actualiza los archivos modificados. Esto para el
+                  proximo commit
+  - git add -i :: muestra un modo interactivo del comando add. El
+                  comando add puede actualizar archivos o agregar
+                  nuevos.
   - git commit -m "este es el inicio" :: confirmar los cambios
        agregando un mensaje
   - git remote add origin https://github.com/wilsoneliseo/insertar.git :: 

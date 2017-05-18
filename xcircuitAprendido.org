@@ -1,0 +1,59 @@
+#+TITLE:     Combinaciones de teclas para XCircuit
+#+AUTHOR:    Wilson S. Tubín
+#+DESCRIPTION: Combinaciones de teclas basicas para el programa para diagramar circuitos.
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
+
+* Teclas
+  - button1 :: click izquierdo
+  - button2 :: click derecho
+  - button3 :: si hay mouse es el boton central. Si es el touchpad
+                presionar click izquierdo y derecho
+                simultaneamente. Otra forma equivalente es shift+button1
+
+* Texto
+  - t :: ingresar texto. La línea verde marca la posición del puntero,
+         y la "x" marca el origen (justificación) del texto.
+  - \ :: estando en modo texto, muestra una serie de simbolos a ingresar
+  - enter :: finaliza la insercion de texto
+
+
+* linea o cable (wire)
+  - w :: inicia una linea
+  - button3 :: finaliza la linea iniciada
+
+* seleccion
+  - button3 :: seleccionar objeto
+  - button1 + button2 :: seleccionar varios objetos. Presionar los dos
+       botones y sobre los objetos a seleccionar, mover el puntero.
+  - x :: cuando un conjunto de elementos esta seleccionado, esta tecla
+         permite deseleccionar elementos puntuales.
+
+* varios
+  - button1 (mantenido) :: mover el objeto sobre el que se ubica el
+       puntero. Ojo que hay que esperar unos segundos manteniendolo
+       presionado.
+  - u :: deshacer
+  - d :: eliminar objeto sobre el que esta el puntero.
+  - c :: copiar objeto
+  - l :: mostrar la libreria de objetos
+  - button1 (mantenido) en la biblioteca de objetos :: para insertar
+       el objeto en la pagina
+  - a :: inserta un circulo
+  - e :: editar objeto
+	 
+  
+* objeto creado por el usuario para la biblioteca de objetos
+  - m :: se seleccionan los objetos que se desean agrupar y colocar en
+         la biblioteca de objetos. Se presiona "m" y salta un cuadro
+         de dialogo preguntando por el nombre del nuevo objeto. No se
+         permiten espacios. presionar ok y aparecera en la biblioteca.
+
+* editar objetos de la biblioteca de objetos
+  Ingresar el objeto (puede presionar l) a editar en la pagina que se
+  este trabajando. Luego poner el cursor sobre el objeto ingresado y
+  presionar ">" (objeto push). La página en la que se encontraba
+  desaparecerá y verá sólo el objeto. Hacer las modificaciones y luego
+  presionar "<" para volver a la pagina inicial de trabajo. Las
+  modificaciones se guardaran.
