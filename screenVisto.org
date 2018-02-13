@@ -1,0 +1,49 @@
+#+TITLE:     Uso del programa de consola, screen
+#+AUTHOR:    Wilson S. Tubin
+#+EMAIL:     wilsoneliseogt@gmail.com
+#+DATE:      2017-07-17 lun
+
+* Combinaciones de tecla basicos
+  - C-a ? :: muestra la pagina de ayuda con los atajos por defecto.
+  - C-a c :: inicia otra ventana dentro de screen (el programa
+                screen). Este actual como una ventana independiente
+                con su propio shell.
+  - C-a K :: mata la ventana actual.
+  - C-a n :: va hacia la siguiente ventana.
+  - C-a p :: va hacia la ventana anterior.
+  - C-a <num> :: cambia hacia la ventana que corresponde con <num>.
+  - C-a " :: muestra una lista de las ventanas abiertas y permite
+                seleccionar alguna.
+  - C-a d :: desconecta la sesion de screen. Para iniciar sesion de
+                nuevo inicie screen con la opcion -r (por el ingles
+                resume).
+
+* Otras caracteristicas de screen
+  La ventana de una sesion de screen puede ser dividida.
+  
+  - C-a S :: divide, horizonta y por la mitad, la ventana actual.
+  - C-a TAB :: cambia entre regiones de la ventana.
+  - C-a X :: elimina la divicion actual
+  - C-a | :: divide verticalmente.
+  - C-a x :: bloquear sesion. Para desbloquear ingresar la
+                contraseña del usuario actual.
+  - C-a A :: permite ingresar el titulo de la ventana actual.
+  - C-a N :: mostrar nombre y titulo de la ventana actual.
+
+* Copiar y pegar
+  - C-a [ :: inicia el modo de copiado
+  - space :: barra espaciadora para iniciar la seleccion
+  - enter :: copia lo seleccionado
+  - C-a ] :: pegar
+
+* Teclas de movimiento
+  - h, j, k, l :: mueve el cursor linea por linea o columna por
+                  columna
+  - 0, ^, y $ :: Mover a la columna más a la izquierda o al primer o
+                 último carácter no-blanco en la línea.
+
+* Fuente
+  https://opensource.com/article/17/3/introduction-gnu-screen
+
+  tambien hay info en:
+  http://web.mit.edu/gnu/doc/html/screen_toc.html#SEC60

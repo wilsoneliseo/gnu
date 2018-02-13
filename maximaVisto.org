@@ -1,0 +1,65 @@
+* Variables opcionales:
+** $ powerdisp:false;
+        Cambia el orden que que se muestra los resultados
+** $ inchar:"entrada";
+        Cambia el tipico %i a entradai. Tambien se puede hacer los
+        mismo con las variables outchar y linechar
+** $ startdisp:false;
+        Si stardisp vale true, la multiplicación se muestra con un
+        asterisco * entre los operandos
+        
+
+* Listas informativas:     $ infolists;
+** $ labels;
+        Muestra las etiquetas usadas hasta el momento (%i1,%o1,%t1 ...)
+** $ values;
+        Todos los átomos que son variables de usuario, no opciones de
+        Maxima creadas con : o ::
+** $ functions;
+        Muestra las funciones definidas por el usuario creadas con :=
+        o define.
+** $ myoptions;
+        Todas las opciones inicializadas por el usuario,
+        independientemente de que posteriormente hayan sido devueltas
+        a sus valores por defecto.
+
+* Funciones Varias
+** $ var:read("ingrese un numero")$
+        imprime 'ingrese un numero' y a continuación lee una expresión
+        desde la consola y devuelve la expresión evaluada en var
+** $ read(exp_1, ... , exp_n)
+        Imprime expr_1, ..., expr_n y a continuación lee una expresión
+        desde la consola y devuelve la expresión SIN evaluar
+** $ disp(expr_1,expr_2,...);
+        Es como display pero sólo se muestran los valores de los
+        argumentos, no las ecuaciones
+** $ display (expr_1, expr_2, ...);
+        Muestra las ecuaciones cuyos miembros izquierdos son expr_i
+        sin evaluar y cuyos miembros derechos son los valores de las
+        expresiones.
+** $ dispterms(expr);
+        Muestra expr en partes, una debajo de la otra. Esto es,
+        primero se muestra el operador de expr, luego cada término si
+        se trata de una suma, o cada factor si es un producto, o si no
+        se muestra separadamente la parte de una expresión más
+        general. Es útil si expr es demasiado grande para
+        representarla de otra forma
+** $ numberp(expr);
+        devuleve true si expr es un número entero, racional, de coma
+        flotante o "bigfloat", en caso contrario devuelve false
+
+* Micelanea
+** $ kill(infolists);
+        La instrucción kill (infolist), siendo infolist cualquier
+        elemento de infolists (como labels, values, functions o
+        arrays), elimina todas las asignaciones hechas a los elementos
+        de infolist
+** $ quit();
+        Termina una sesión de Maxima. Nótese que la función debe ser
+        invocada como quit(); o quit()$, no como quit.
+** $ reset();
+        Reconfigura muchas variables y opciones globales y algunas
+        otras variables a sus valores por defecto.
+
+** $ system("comando");
+        Ejecuta el "comado" del sistema

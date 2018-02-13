@@ -1,3 +1,199 @@
+#+TITLE:     Emacs Visto en GNU/linux debian
+#+AUTHOR:    Wilson S. Tubín
+#+EMAIL:     wilsoneliseogt@gmail.com
+#+DATE:      2017-12-10 dom
+#+DESCRIPTION: Contiene combinaciones de teclas e informacion sobre el uso de emacs 23.4.1 (x86_64_pc_linux_gnu, GTK+ Version 2.24.10) of 2012-09-08 on trouble, modified by Debian
+#+KEYWORDS: 
+#+LANGUAGE:  es
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+
+
+* Generales
+
+** Coding Systems
+  - C-h C <RET> :: describe el sistema de codificacion actualmente en
+                   uso.
+** Curiosidades
+  - C-q TAB :: Inserta un caracter de tabulacion '\t'  
+  - C-q num :: inserta caracter no imprimible. num es un numero octal
+  - M-x untabify :: quita tabulaciones en el area seleccionada
+  - C-M-w :: Anexar matanza siguiente al último lote de texto cortado.
+  - C-x RET f :: seleccionar el codigo de caracteres a utilizar para
+                 guardar el buffer actual, por ejemplo, guardar texto
+                 para windows y no para unix.
+  - C-x C-m f :: cambiar la codificacion de caracteres del archivo actual.
+  - M-x xterm-mouse-mode :: habilita la seleccion de buffer con el
+       mouse cuando se abre emacs en la consola.
+  - M-x whitespace-mode :: modo menor para visualizar TAB, (HARD)
+       SPACE, NEWLINE
+  - M-x wdired-change-to-wdired-mode :: cuando esta en un buffer Dired
+       (C-x d ó M-x dired) hace posible renombrar archivos utilizando
+       con C-x r t (string-rectangle), M-% (Query-replace), M-c
+       (mayúscula-palabra), etc . Es decir cualquier comando de emacs
+  - C-h f <funcion> <RET> :: ver documentacion de una funcion. Por
+    ejemplo  C-h f org-mode <RET>
+  - C-x = :: muestra un mensaje que describe el caracter en el punto,
+             ej: codigo en decimal, octal y hexadecimal,
+             columna. (emacs) Echo Area
+  - C-c C-c :: vuelve al modo mayor inicial, cuando se ha cambiado
+               hacia otro diferente.
+
+
+** Acumulacion de texto
+   - M-x append-to-buffer :: añadir region seleccionada al contenido de un 
+                               buffer específico. Pone el texto DESPUES del la
+			       ubicacion del cursor en el buffer especifico.
+   - M-x prepend-to-buffer :: añadir region seleccionada al contenido de un 
+                                buffer específico. Pone el texto ANTES del la
+			        ubicacion del cursor en el buffer especifico.
+   - M-x copy-to-buffer :: Copiar region dentro de buffer especifico, 
+                              eliminando antes el contenido de éste.
+   - M-x insert-buffer :: Insertar el contenido de un buffer especifico dentro
+                            del buffer actual en el punto actual.
+   - M-x append-to-file :: añadir region al contenido de un archivo especifico
+                             al final.
+** Seleccion Rectangular
+   - C-x r k :: elimina un rectángulo.
+   - C-x r y :: pega un rectángulo.
+   - C-x r o :: crea un rectángulo como el seleccionado previamente
+     sin contenido, abre un área.
+   - C-x r c :: rellena con espacios el rectángulo seleccionado, sin
+     borrar su desplazamiento pero sí su contenido.
+   - C-x r d :: elimina un rectángulo seleccionado, incluyendo su
+     desplazamiento y su contenido.
+   - C-x r r [a-z0-9] :: copia el rectángulo a un registro, que puede
+     ser usado posteriormente, los registros validos son cualquier
+     carácter alfanumérico.
+   - C-x r i :: inserta el contenido de un registro.
+   - C-x r t :: rellena con un carácter o cadena un rectángulo. Además
+     el rectángulo puede redimensionarse en caso de que el ancho
+     exceda las dimensiones del rectángulo.
+
+** Buffer List
+   Los siguientes comandos son cuando se habre un buffer que contiene
+   una lista de bufferes abiertos en la sesion actual de emacs. Es
+   decir el buffer que se abre cuando se ejecuta C-x C-b
+
+   - C-k :: marcar para eliminar
+   - s :: marcar para guardar
+   - x :: ejecutar
+   - g :: refrescar
+   - q :: salir
+
+* Mark
+** Marking Objects
+   - M-@ :: seleccionar la palabra
+   - C-M-@ :: establecer marca despues del final del la siguiente
+              expresión balaceada (‘mark-sexp’). Esto no mueve el
+              punto.
+   - M-h :: mover le punto al comienzo y selecciona este  parrafo
+   - C x :: mueve, el cursor, de inicio a final y viceversa de la
+	    region seleccionada
+   - C-x C-p :: Mover el punto al inicio de la pagina actual, y
+                establecer la marca al final 'mark-page'
+   - C-x h :: Mover el punto al inicio del buffer, y establecer la
+              marca el final (‘mark-whole-buffer’)
+
+** Using Region
+Una vez tenga una region, aqui estan algunas formas de operarlo:
+   - Undo changes within it using ‘C-u C-/’ (*note Undo::).
+   - Replace text within it using ‘M-%’ (*note Query Replace::).
+   - Indent it with ‘C-x <TAB>’ or ‘C-M-\’ (*note Indentation::).
+
+** Mark Ring
+Each buffer remembers previous locations of the mark, in the "mark
+ring".  Commands that set the mark also push the old mark onto this
+ring.  One of the uses of the mark ring is to remember spots that you
+may want to go back to.
+
+   - C-<SPC> C-<SPC> :: Set the mark, pushing it onto the mark ring,
+        without activating it.
+   - C-u C-<SPC> :: Move point to where the mark was, and restore the
+                    mark from the ring of former marks.
+** Global Mark Ring
+In addition to the ordinary mark ring that belongs to each buffer,
+Emacs has a single "global mark ring"
+
+   - C-x C-<SPC> :: (‘pop-global-mark’) jumps to the buffer and
+		    position of the latest entry in the global ring
+
+* Macros
+** Basic Keyboard Macro
+   - <F3> :: Start defining a keyboard macro
+             (‘kmacro-start-macro-or-insert-counter’).
+   - <F4> :: If a keyboard macro is being defined, end the definition;
+             otherwise, execute the most recent keyboard macro
+             (‘kmacro-end-or-call-macro’).
+   - C-u <F3> :: Re-execute last keyboard macro, then append keys to
+                 its definition.
+   - C-u C-u <F3> :: Append keys to the last keyboard macro without
+                     re-executing it.
+   - C-x C-k r :: Run the last keyboard macro on each line that begins
+                  in the region (‘apply-macro-to-region-lines’).
+   - M-x edit-kbd-macro :: pregunta si:
+     * Editar macros
+     * Ultima macro (C-x e),
+       las últimas 100 (C-x l),
+       o secuencias de teclas personalizada
+   - C-x q :: pregunta si continua ejecución
+
+** Save Keyboard Macro
+   - C-x C-k n :: Give a command name (for the duration of the Emacs
+                  session) to the most recently defined keyboard macro
+                  (‘kmacro-name-last-macro’).
+   - C-x C-k b :: Bind the most recently defined keyboard macro to a
+                  key sequence (for the duration of the session)
+                  (‘kmacro-bind-to-key’).
+   - M-x insert-kbd-macro :: Insert in the buffer a keyboard macro’s
+        definition, as Lisp code.
+
+* Dired
+  Directory and file manager.
+** Operacion
+    - C :: Copiar a..
+    - R :: Renombrar archivo actual
+    - D :: Eliminar archivo actual
+    - Z :: Comprimir archivo actual
+    - C-t d :: ver imagen (probado y funciona en modo grafico)
+** Marcar
+    - m :: marcar archivo actual
+    - u :: desmarcar archivo actual
+    - U :: desmarcar todos los elementos marcados
+    - t :: los marcados los desmarca y los desmarcados los marca
+    - M-} :: pasar a la siguiente marca
+    - M-{ :: regresar a la anterior marca
+    - ** :: marca los archivos con permiso de ejecucion
+** regexp
+    - % g :: marcar lo que contenga...
+    - % m :: marcar..
+    - % d :: bandera..
+    - % C :: copiar..
+    - % R :: renombrar..
+** Inmediato
+    - C-x C-q :: entra a otro modo para cambiar el nombre de los
+                 archivos
+    - + :: crear carpeta
+    - M-= :: comparar este archivo con su backup (~)
+    - o :: abrir archivo en otra ventana
+    - v :: ver archivo
+    - g :: refrescar
+    - C-t i :: ver imagen (probado y funciona en modo grafico)
+    - C-t x :: ver imagen en ventana diferente (consola)
+** Subdir
+    - i :: insertar este directorio en el buffer
+    - > :: siguiente directorio
+    - < :: anterior directorio
+    - C-M n :: siguiente subdirectorio
+    - C-M p :: anterior subdirectorio
+    - M ^ :: directorio superior
+    - $ :: mostrar/ocultar el subdirectorio
+    - M-$ :: mostrar todos los subdirectorios
 * Comandos de edición TeX
   - C-j :: un salto de párrafo (dos nuevas líneas) y verifica en el
   párrafo anterior que no haya llaves disparejas o signos de pesos
@@ -27,7 +223,7 @@
                del parrafo
   - C-c C-i :: ayuda de aucTeX	     
 
-** Unididades estructurales
+** Unidades estructurales
    - C-c C-s :: inserta seccio del nivel acutual
    - C-u C-c C-s :: inserta seccion de nivel inmediatamente infe- rior
      al actual
@@ -88,6 +284,12 @@
      fila actual, y mueve el cursor a la fila bajo la línea.
    - C-c ^ :: muestra un menu en el cual se podra ordenar alfabetica,
               numéricamente la columna actual.
+   - <S> <RET> :: <S> es shift. Si la celda actual tiene un numero y
+                  se realiza la combinacion de tecla, salta a la
+                  siguiente fila y escribe el numero consecutivo
+                  inmediato.
+   - <TAB> :: avanza a la siguiente columna de la fila actual
+   - <RET> :: avanza a la siguiente fila de la columna actual
 		 
 
 *** Columas con anchura definida
@@ -125,7 +327,7 @@
     tabla Org, también puedes usarlo en otros modos como el modo Texto
     o el modo Correo.  El modo Orgtbl de modo menor lo hace posible.
     Siempre puede alternar el modo con M-x orgtbl-mode RET.
-
+    
 *** La hoja de calculo
     El editor de tablas hace uso del paquete Emacs calc para
     implementar capacidades similares a la hoja de cálculo.  También
@@ -563,117 +765,6 @@
     CONSEJO: cuando se exporta algun contenido que se quiere mostrar
     como codigo o similar encerrarlo entre #+BEGIN_COMMENT
     y #+END_COMMENT
-
-* Generales
-** Varios
-  - M-h :: seleccionar parrafo
-  - M-@ :: seleccionar la palabra
-  - C-q TAB :: Inserta un caracter de tabulacion '\t'  
-  - C-q num :: inserta caracter no imprimible. num es un numero octal
-  - M-x untabify :: quita tabulaciones en el area seleccionada
-  - C-M-w :: Anexar matanza siguiente al último lote de texto cortado.
-  - C x :: mueve, el cursor, de inicio a final y viceversa de la
-    region seleccionada
-  - C-x RET f :: seleccionar el codigo de caracteres a utilizar para
-                 guardar el buffer actual, por ejemplo, guardar texto
-                 para windows y no para unix.
-** Acumulacion de texto
-   - M-x append-to-buffer :: añadir region seleccionada al contenido de un 
-                               buffer específico. Pone el texto DESPUES del la
-			       ubicacion del cursor en el buffer especifico.
-   - M-x prepend-to-buffer :: añadir region seleccionada al contenido de un 
-                                buffer específico. Pone el texto ANTES del la
-			        ubicacion del cursor en el buffer especifico.
-   - M-x copy-to-buffer :: Copiar region dentro de buffer especifico, 
-                              eliminando antes el contenido de éste.
-   - M-x insert-buffer :: Insertar el contenido de un buffer especifico dentro
-                            del buffer actual en el punto actual.
-   - M-x append-to-file :: añadir region al contenido de un archivo especifico
-                             al final.
-** Macros
-   - C-x ( :: Inicia la grabación de una macro
-   - C-x ) :: finaliza la grabación de una macro
-   - M-x edit-name-kbd-macro :: edita macro (con nombre)
-   - M-x edit-last-kbd-macro :: edita la ultima macro
-   - C-u C-x ( :: ejecuta y permite añadir comandos
-   - C-x C-k n :: nombre a una macro. Esta es la función
-     name-last-kbd-macro
-   - M-x edit-kbd-macro :: pregunta si:
-                             * Editar macros
-			     * Ultima macro (C-x e),
-			       las últimas 100 (C-x l),
-			       o secuencias de teclas personalizada
-   - C-x q :: pregunta si continua ejecución			       
-
-** Seleccion Rectangular
-   - C-x r k :: elimina un rectángulo.
-   - C-x r y :: pega un rectángulo.
-   - C-x r o :: crea un rectángulo como el seleccionado previamente
-     sin contenido, abre un área.
-   - C-x r c :: rellena con espacios el rectángulo seleccionado, sin
-     borrar su desplazamiento pero sí su contenido.
-   - C-x r d :: elimina un rectángulo seleccionado, incluyendo su
-     desplazamiento y su contenido.
-   - C-x r r [a-z0-9] :: copia el rectángulo a un registro, que puede
-     ser usado posteriormente, los registros validos son cualquier
-     carácter alfanumérico.
-   - C-x r i :: inserta el contenido de un registro.
-   - C-x r t :: rellena con un carácter o cadena un rectángulo. Además
-     el rectángulo puede redimensionarse en caso de que el ancho
-     exceda las dimensiones del rectángulo.
-
-** Directorios
-   Los siguientes comandos son para cuando se abre un directorio en un
-   buffer con el comando C-x d <DIR>.
-*** Operacion
-    - C :: Copiar a..
-    - R :: Renombrar archivo actual
-    - D :: Eliminar archivo actual
-    - Z :: Comprimir archivo actual
-    - C-t d :: ver imagen (probado y funciona en modo grafico)
-*** Marcar
-    - m :: marcar archivo actual
-    - u :: desmarcar archivo actual
-    - U :: desmarcar todos los elementos marcados
-    - t :: los marcados los desmarca y los desmarcados los marca
-    - M-} :: pasar a la siguiente marca
-    - M-{ :: regresar a la anterior marca
-    - ** :: marca los archivos con permiso de ejecucion
-*** regexp
-    - % g :: marcar lo que contenga...
-    - % m :: marcar..
-    - % d :: bandera..
-    - % C :: copiar..
-    - % R :: renombrar..
-*** Inmediato
-    - C-x C-q :: entra a otro modo para cambiar el nombre de los
-                 archivos
-    - + :: crear carpeta
-    - M-= :: comparar este archivo con su backup (~)
-    - o :: abrir archivo en otra ventana
-    - v :: ver archivo
-    - g :: refrescar
-    - C-t i :: ver imagen (probado y funciona en modo grafico)
-    - C-t x :: ver imagen en ventana diferente (consola)
-*** Subdir
-    - i :: insertar este directorio en el buffer
-    - > :: siguiente directorio
-    - < :: anterior directorio
-    - C-M n :: siguiente subdirectorio
-    - C-M p :: anterior subdirectorio
-    - M ^ :: directorio superior
-    - $ :: mostrar/ocultar el subdirectorio
-    - M-$ :: mostrar todos los subdirectorios
-** Buffer List
-   Los siguientes comandos son cuando se habre un buffer que contiene
-   una lista de bufferes abiertos en la sesion actual de emacs. Es
-   decir el buffer que se abre cuando se ejecuta C-x C-b
-
-   - C-k :: marcar para eliminar
-   - s :: marcar para guardar
-   - x :: ejecutar
-   - g :: refrescar
-   - q :: salir
 * Expresion regular
 ** practica
 .*\"\(\w+\)\" />
@@ -807,3 +898,74 @@ $ final de linea
                 directamente
   - C-x * b :: activar el keypad mode en modo full o lo que es lo
                mismo llamando a la funcion M-x full-calc-keypad
+* 13 Registers
+  Los registros son compartimentos donde puede guardarse, texto,
+  rectangulos, posiciones, y otras cosas para uso posterior.
+  
+  Cada registro tienen un nombre que sonsiste de un simple caracter,
+  que denotaremos como /r/; /r/ puede ser una letra (ej. 'a'), o
+  numero (ej. '1').
+
+  Un registro almacena una posicion, pieza de texto, rectangulo, un
+  numero, ventana de configuracion, o un nombre de archivo, pero una
+  sola cosa a la vez. El registro permanece ahí, hasta que almacene
+  otra cosa mas en el registro. Para ver el contenido del registro /r/
+  utilize: ~M-x view-register <RET> r~, que muestra una descripcion
+  del contenido del registro /r/.
+** 13.1 Saving Positions in Registers
+   - C-x r <SPC> r :: Record the position of point and the current
+                      buffer in register r (point-to-register).
+   - C-x r j r :: Jump to the position and buffer saved in register r
+                  (jump-to-register).
+
+** 13.2 Saving Text in Registers
+   
+** 13.8 Bookmarks
+   - C-x r m /bookmark/ :: establece un marcador llamado
+       	/bookmark/ en este punto.
+   - C-x r b /bookmark/ :: Salta al marcado llamado /bookmark/
+   - C-x r l :: editar lista de marcadores. Se puede ejecutar comandos
+       	similares a buffer Dired (C-x d ó M-x dired).
+   - M-x bookmark-save :: guardar los valores actuales de los
+       	marcadores en el archivo de marcadores por defecto. Este
+       	archivo se carga automaticamente cuando se vuelve abrir el
+       	archivo y asi tener guardado los marcadores entre una sesion y
+       	otra
+* 18.1 Names
+  - M-x pwd :: para ver el valor de default-directory en el buffer
+               actual
+  - M-x cd :: solicita un nombre de directorio y establece el
+  directorio predeterminado del búfer en ese directorio (esto no
+  cambia el nombre de archivo del búfer, si lo hay).
+
+* 18.2 Visiting Files
+  - C-x C-f :: visita un archivo (find-file)
+  - C-x C-r :: visita un archivo para vista, sin permitir cambios
+               (find-file-read-only).
+  - C-x C-v :: Visita un archivo diferente en lugar del último
+               visitado
+
+* Instalar nuevos paquetes
+  Para instalar nuevos paquetes poner ~M-x package-list-packages~ y
+  mostrara un listado con todos las paquetes disponibles e
+  instalados. Es bien interactivo y grafico asi que no hay problema.
+
+  Tambien es posible instalar paquetes con
+#+BEGIN_EXAMPLE
+M-x package-install <RET> <nombre-paquete> <RET>
+#+END_EXAMPLE
+
+** Anotaciones sobre paquetes instalados
+
+*** company
+    Sirve para autocompletar los lenguajes como c, c++, latex, etc. se
+    activa con ~M-x company-mode~
+
+    Su pagina es:
+    http://company-mode.github.io/
+
+** Paquetes interesantes
+   1. lex
+   2. sql-indent
+* Fuente
+  https://www.gnu.org/software/emacs/manual/html_mono/emacs.html

@@ -1,343 +1,286 @@
-* PRÓLOGO
-
-  |------------------------------------------------------------------------------------------------|
-  | La siguiente recopilación de comandos para GNU/Linux obedece a una necesidad.Cuando me inicié  |
-  | en Debian GNU/Linux, a las pocas semanas de tener mi primer ordenador,de eso hace tres años,   |
-  | (sí,soy de los que han llegado tarde) me encontré con que las recopilaciones que circulaban    |
-  | por internet no me terminaban de convencer ni cubrir todas mis carencias.De manera que,cabezón |
-  | yo,me puse a la tarea de llevarla a cabo por mi cuenta y riesgo.                               |
-  |                                                                                                |
-  | Se actualiza constantemente,comando nuevo que veo,comando que incluyo.                         |
-  |                                                                                                |
-  | Que la disfrutéis.                                                                             |
-  |                                                                                                |
-  |                                                                                                |
-  | Prólogo a EsDebian                                                                             |
-  | ******************                                                                             |
-  |                                                                                                |
-  | Ahora que han salido las faqs,es una buena ocasión para incluir un listado de comandos de GNU/ |
-  | linux en esDebian y curiosamente dispongo de uno.Todo empezó al instalar Debian a un colega.   |
-  | Pensé que no sería mala idea que,aparte de disponer en su menú de enlaces a manuales,pudiera   |
-  | echar un vistazo rápido a un listado de comandos básicos con sólo apretar una tecla(usa icewm) |
-  |                                                                                                |
-  | Al final lo que hice fue unir el listado básico que hice para él,con el que vengo utilizando   |
-  | yo mismo.No están todos los que son pero si son todos los que están.Es posible que haya algún  |
-  | error o que algunos estén a medio hacer,en cuyo caso y al igual que en las faqs se pueden ir   |
-  | aportando nuevos datos hasta completarlo.                                                      |
-  |------------------------------------------------------------------------------------------------|
-
 * FICHEROS
-** EXPLORANDO EL DISCO
+** Explorando el disco
+- mc :: gestor de ficheros que incluye un cliente FTP,SMB
 
-   |-------------------------------------------------------------------------------------|
-   |                                                                                     |
-   | mc --------------------------- Gestor de ficheros que incluye un cliente FTP,SMB... |
-   | mcedit ----------------------- Editor de texto incluido en mc.                      |
-   |                                                                                     |
-   | pwd -------------------------- Te dice dónde estás.                                 |
-   |                                                                                     |
-   | ls --------------------------- Lista los ficheros de un directorio concreto.        |
-   |   |ls -R --------------------- Lista recursivamente.                                |
-   |   |ls -C --------------------- Lista los ficheros en columnas.                      |
-   |   |ls -l --------------------- Lista también las propiedades y atributos.           |
-   |   |ls -a --------------------- Lista ficheros incluidos los ocultos de sistema.     |
-   |   |ls -la | more ------------- Lista los ficheros de forma paginada                 |
-   |   '-------------                                                                    |
-   |                                                                                     |
-   | cd directorio ---------------- Cambia de directorio                                 |
-   |   |cd .. --------------------- Vuelves al anterior.                                 |
-   |   |cd .mozilla --------------- Entras al de mozilla.(por la puerta grande)          |
-   |   |cd ./.mozilla ------------- Entras al de mozilla (indicando la ruta relativa)    |
-   |   |cd /home/paco/.mozilla ---- Entras al de mozilla.(indicando la ruta completa)    |
-   |   '-----------------------                                                          |
-   |                                                                                     |
-   |-------------------------------------------------------------------------------------|
+- mcedit :: Editor de texto incluido en mc
 
-** BUSCANDO   
+- pwd :: Te dice dónde
 
-   |-------------------------------------------------------------------------------------|
-   |                                                                                     |
-   | find /home/paco -name *.jpg -print --- Buscador de ficheros.                        |
-   |     ----------  ----------  -----                                                   |
-   |        |            |           `----> muestra la ruta fichero encontrado           |
-   |        v            |                                                               |
-   |  ruta donde buscar  '---> patrón de búsqueda (-iname ignoraría mayúsculas)          |
-   |                                                                                     |
-   | locate expresión ------------- Busca ficheros que contengan una expresion dada en   |
-   |                                su «ruta completa».Admite comodines.                 |
-   | locatedb --------------------- Actualiza la base de datos en la que se basa locate. |
-   |                                                                                     |
-   | type comando ----------------- Busca un ejecutable,siempre que no sea del shell     |
-   | whereis comando -------------- Busca un ejecutable,su código fuente y página man    |
-   |                                                                                     |
-   |-------------------------------------------------------------------------------------|
+- ls :: Lista los ficheros de un directorio concreto.
+  - ls -R :: Lista recursivamente.
+  - ls -C :: Lista los ficheros en columnas.
+  - ls -l :: Lista también las propiedades y atributos.
+  - ls -a :: Lista ficheros incluidos los ocultos de sistema.
+  - ls -la | more :: Lista los ficheros de forma paginada
+  - ls -B :: No lista ficheros /backup/ ~
+
+** Manejo de archivos masivos
+- find . -type d -empty -print0 | xargs -0 rmdir :: borra carpetas
+     vacias en el directorio actual
+
+- find . -type f -name *.txt -exec mv {} ./dir_5 \; :: mover archivos
+     txt en la carpeta actual hacia dir_5. No importa si los txt's
+     estan en subcarpetas.
+
+- find . -type f -name *.txt -delete :: borra todos los txt de la
+     carpeta actual y de sus subcarpetas
 
 
-** CARACTERÍSTICAS Y COMPARACIONES
-   .-------------------------------------------------------------------------------------.
-   |                                                                                     |
-   | file fichero ------------------ Muestra de qué tipo es un fichero.                  |
-   | readelf -a -------------------- Muestra información sobre un fichero ELF            |
-   | stat fichero ------------------ Muestra el estado de un fichero.                    |
-   | join fich1 fich2 -------------- Muestra las líneas coincidentes entre ellos.        |
-   |                                                                                     |
-   | cmp [opciones]fich1 fich2 ----- Compara ficheros byte a byte.                       |
-   |  |-l -------------------------- Muestra todas las diferencias,no solo la primera.   |
-   |  '------------------                                                                |
-   |                                                                                     |
-   |   .---------------------------------------------------------------------------.     |
-   |   |comm [opciones] fichero1 fichero2    Compara ficheros línea por línea.Sin  |     |
-   |   |                                     opciones produce una salida con tres  |     |
-   |   |columnas.La primera con las líneas únicas del primer fichero.La segunda,las|     |
-   |   |del segundo y la tercera las que aparecen en los dos.No es tan fiable como |     |
-   |   |diff,ya que espera que las líneas se hayen encuentren en la misma posición |     |
-   |   |dentro del fichero.                                                        |     |
-   |   |                                                                           |     |
-   |   |Opciones:                                                                  |     |
-   |   |-1 --- suprime la primera columna en su salida                             |     |
-   |   |-2 --- suprime la seguna columna en su salida                              |     |
-   |   |-3 --- suprime la tercera columna en su salida                             |     |
-   |   '---------------------------------------------------------------------------'     |
-   |                                                                                     |
-   |   .---------------------------------------------------------------------------.     |
-   |   |diff [opciones] fichero1 fichero2    Compara ficheros y si son directorios,|     |
-   |   |                                     el contenido de los mismos.           |     |
-   |   |Opciones:                                                                  |     |
-   |   |-b ------------------- Ignora los espacios en blanco.                      |     |
-   |   |--text --------------- Compara el texto línea por línea                    |     |
-   |   |-w  ------------------ Descarta espacio en blanco cuando compara líneas.   |     |
-   |   |-r ------------------- Compara directorios de forma recursiva.             |     |
-   |   |-q  ------------------ Informa sólo de si los ficheros difieren.           |     |
-   |   |-y  ------------------ Muestra la salida a dos columnas.                   |     |
-   |   '---------------------------------------------------------------------------'     |
-   |                                                                                     |
-   | zcmp [opciones_cmp] fich.1 fich.2 ---- Llama a cmp sobre ficheros comprimidos.      |
-   | zdiff [opciones_diff] fich.1 fich.2 -- Invoca a diff sobre ficheros comprimidos.    |
-   |                                                                                     |
-   '-------------------------------------------------------------------------------------' 
+** Caracteristicas y comparaciones
+- file <fichero> :: Muestra de qué tipo es el <fichero>.
+
+- readelf -a :: Muestra información sobre un fichero ELF[fn:1]
+
+- stat <fichero> :: Muestra el estado de un fichero.
+
+- join <fich1> <fich2> :: Muestra las líneas coincidentes entre ellos.
+
+- comm [opciones] fichero1 fichero2 :: Compara ficheros línea por
+     línea. Sin opciones produce una salida con tres columnas.La
+     primera con las líneas únicas del primer fichero.La segunda,las
+     del segundo y la tercera las que aparecen en los dos.No es tan
+     fiable como diff,ya que espera que las líneas se hayen encuentren
+     en la misma posición dentro del fichero. Opciones:
+  * -1 :: suprime la primera columna en su salida
+  * -2 :: suprime la seguna columna en su salida
+  * -3 :: suprime la tercera columna en su salida
+
+- diff [opciones] <fichero1> <fichero2> :: Compara ficheros y si son
+     directorios, el contenido de los mismos. Opciones:
+  * -b :: Ignora los espacios en blanco.
+  * --text :: Compara el texto línea por línea
+  * -w :: Descarta espacio en blanco cuando compara líneas.
+  * -r :: Compara directorios de forma recursiva.
+  * -q :: Informa sólo de si los ficheros difieren.
+  * -y :: Muestra la salida a dos columnas.
+
+- zcmp [opciones_cmp] fich.1 fich.2 :: Llama a cmp sobre ficheros comprimidos.
+
+- zdiff [opciones_diff] fich.1 fich.2 :: Invoca a diff sobre ficheros comprimidos.
+
 
 ** VIENDO Y FILTRANDO CONTENIDOS
-   .-------------------------------------------------------------------------------------.
-   |                                                                                     |
-   | nl fichero --------------- Muestra el contenido con las líneas numeradas.           |
-   |  |-v 50 ------------------ Muestra el contenido a partir de la línea 50.            |
-   |  '------------------                                                                |
-   |                                                                                     |
-   | cat fichero -------------- Muestra el contenido de un fichero.(-n numera las líneas)|
-   | tac fichero -------------- Muestra el contenido de un fichero en orden contrario    |
-   | sort fichero ------------- Muestra el contenido de un fichero en orden alfabético.  |
-   |  |-d --------------------- Muestra directorios.                                     |
-   |  |-f --------------------- Ignora las mayúsculas y minúsculas.                      |
-   |  |-r- -------------------- De mayor a menor.                                        |
-   |  |-n --------------------- En orden númerico.                                       |
-   |  |-u --------------------- Elimina de su salida las líneas iguales consecutivas.    |
-   |  '------------------                                                                |
-   |                                                                                     |
-   | od fichero --------------- Muestra byte a byte el contenido de un fichero.          |
-   | |   ---------------------- Sin  opciones lo muestra  en  octal de dos en dos bytes  |
-   | |-b ---------------------- en octal byte a byte                                     |
-   | |-c ---------------------- en caracteres ascii,de a uno,los saltos de línea como \n |
-   | |-cb --------------------- en caracteres ascii de a uno y su correspondiente octal. |
-   | |-h ---------------------- en hexadecimal de dos en dos bytes                       |
-   | |-s ---------------------- en decimal de dos en dos bytes                           |
-   | '------------------                                                                 |
-   |                                                                                     |
-   | pr fichero --------------- Muestra el contenido de un fichero de manera formateada. |
-   |  |--columns=2 ------------ Lo muestra a dos columnas.                               |
-   |  '------------------                                                                |
-   |                                                                                     |
-   | more fichero -------.                                                               |
-   |                     |----> Muestra el contenido de un fichero de forma paginada.    |
-   | less fichero -------'                                                               |
-   |                                                                                     |
-   | zcat fichero -------,                                                               |
-   | zmore fichero ------|----> Muestra el contenido de un fichero comprimido (.gz)      |
-   | zless fichero ------'                                                               |
-   |                                                                                     |
-   | pg fichero --------------> Muestra el contenido de un fichero de forma paginada.    |
-   |  |                         Las opciones(«less» también lo permite)se introducen una |
-   |  |3 ---------------------- Muestra la página 3.              [vez abierto el prompt |
-   |  |/patrón ---------------- Busca la expresión patrón.                               |
-   |  |q ---------------------- Nos salimos.                                             |
-   |  '------------------                                                                |
-   |                                                                                     |
-   | wc fichero --------------- Muestra nº de líneas,palabras y bytes de un fichero      |
-   | echo expresión ----------- Muestra en pantalla el texto que le siga.                |
-   | strings fichero ---------- Muestra los caracteres mostrables de un fichero(no ascii)|
-   |                                                                                     |
-   | tail fichero ------------- Muestra las 10 últimas líneas de un archivo.             |
-   |  |tail -n Nº archivo ----- Muestra las Nº últimas líneas del fichero.               |
-   |  '-------------------                                                               |
-   |                                                                                     |
-   | head fichero ------------- Muestra las 10 primeras líneas de un fichero.            |
-   |  |head -n Nº fichero ----- Muestra las primeras Nº líneas de un fichero.            |
-   |  '------------------                                                                |
-   |                                                                                     |
-   |   .---------------------------------------------------------------------------.     |
-   |   |tee [opciones][fichero]                                                    |     |
-   |   |                                                                           |     |
-   |   |Comando que se suele usar como filtro entre dos pipes.Lee los datos de la  |     |
-   |   |entrada estándar y los vuelca en pantalla y en un fichero (ver cap.        |     |
-   |   |Entrada/Salida).Usado con la opción -a ,no sobreescribe el fichero sino    |     |
-   |   |que añade datos.                                                           |     |
-   |   '---------------------------------------------------------------------------'     |
-   |                                                                                     |
-   |   .---------------------------------------------------------------------------.     |
-   |   |grep [opciones] patrón fichero ---- Busca texto coincidente con un patrón. |     |
-   |   |                                                                           |     |
-   |   |Opciones:                                                                  |     |
-   |   |-A Nº  ------------------ Incluye las Nº líneas siguientes.                |     |
-   |   |-B Nº ------------------- Incluye las Nº líneas anteriores.                |     |
-   |   |-E - equivale a «egrep»-- Interpreta el patrón como una expresión regular. |     |
-   |   |-a ---------------------- Procesa un binario como si de texto se tratara.  |     |
-   |   |-r ---------------------- Realiza la búsqueda de forma recursiva           |     |
-   |   |-l ---------------------- Muestra los ficheros que contienen el patrón.    |     |
-   |   |-n ---------------------- Muestra la línea (y su nº)que contiene el patrón.|     |
-   |   '---------------------------------------------------------------------------'     |
-   |                                                                                     |
-   |   .---------------------------------------------------------------------------.     |
-   |   | uniq fichero ------------- Elimina las líneas consecutivas repetidas de un|     |
-   |   |                            fichero (o entrada estándar) mostrando sólo una|     |
-   |   |                            en su salida por pantalla (o un fichero )      |     |
-   |   |                                                                           |     |
-   |   |Sintaxis : uniq [opción] [entrada [salida]]                                |     |
-   |   |                                                                           |     |
-   |   |Opciones:                                                                  |     |
-   |   |-c    Comienza la línea con el número de veces que aparece.                |     |
-   |   |-i    Ignora mayúsculas y minúsculas al comparar.                          |     |
-   |   |-d    Muestra sólo líneas repetidas.                                       |     |
-   |   |-u    Muestra sólo líneas únicas.                                          |     |
-   |   '---------------------------------------------------------------------------'     |
-   |                                                                                     |
-   |   .---------------------------------------------------------------------------.     |
-   |   |tr  Sustituye o borra caracteres y al igual que tee lee desde la entrada   |     |
-   |   |    estándar (teclado)y vuelca los dator filtrados a la salida  estándar   |     |
-   |   |    (pantalla),por lo que se suele emplear entre tuberías.                 |     |
-   |   |                                                                           |     |
-   |   | Sintaxis: tr [opcion] lista1 [lista2]                                     |     |
-   |   |                                                                           |     |
-   |   | Sin opciones sustituye los carateres de la lista1 por los de la lista2,   |     |
-   |   | realizándose de uno en uno,el 1º de la lista1 por el 1º de la lista2...   |     |
-   |   | por lo que ambas listas deben tener mismo nº de caracteres o bien que la  |     |
-   |   | lista2 tenga tan sólo uno que sustituirá a todos los de la lista1.        |     |
-   |   |                                                                           |     |
-   |   | Opciones:                                                                 |     |
-   |   | -c --- Serán sustituídos todos salvo los de la lista1.                    |     |
-   |   | -d --- Elimina los caracteres espeficificados en la lista1.               |     |
-   |   | -s --- Comprime los caracteres repetidos de lista1 en uno solo            |     |
-   |   |                                                                           |     |
-   |   | Algunas de las secuencias de caracteres que se pueden especificar son:    |     |
-   |   |                                                                           |     |
-   |   |     .----------------------------------------------------.                |     |
-   |   |     |\n --------- Salto de línea                         |                |     |
-   |   |     |\r --------- Retorno del carro                      |                |     |
-   |   |     |\t --------- Tabulación horizontal                  |                |     |
-   |   |     |\v --------- Tabulación vertical                    |                |     |
-   |   |     |[=CAR=] ---- Todos los caracteres iguales que CAR   |                |     |
-   |   |     |CAR1-CAR2 -- Un rango de caracteres,p.ej. a-z y A-Z |                |     |
-   |   |     |[:alnum:] -- Letras y dígitos                       |                |     |
-   |   |     |[:alpha:] -- Las letras                             |                |     |
-   |   |     |[:blank:] -- Espacios en blanco horizontales        |                |     |
-   |   |     |[:cntrl:] -- Caracteres de control                  |                |     |
-   |   |     |[:digit:] -- Los dígitos                            |                |     |
-   |   |     '----------------------------------------------------'                |     |
-   |   |                                                                           |     |
-   |   |  Ejemplos:                                                                |     |
-   |   |                                                                           |     |
-   |   | 1)   prompt# tr A-Z a-z          2)  prompt# tr -d [=A=]                  |     |
-   |   |      HOLA MUNDO   «enter»            HOLA MUNDO   «enter»                 |     |
-   |   |      hola mundo   «ctrl+c»           HOL MUNDO    «ctrl+c»                |     |
-   |   |      promp#                          promp#                               |     |
-   |   |                                                                           |     |
-   |   |                                                                           |     |
-   |   | 3)   tr -d "\r" < texto_dos.txt > texto_unix.txt                          |     |
-   |   |      elimina todos los retornos de carro                                  |     |
-   |   |                                                                           |     |
-   |   |      tr '\r' '\n' < texto_mac.txt > texto_linux.txt                       |     |
-   |   |      sustituye los retornos de carro por saltos de línea                  |     |
-   |   |                                                                           |     |
-   |   |                       (ver cap. formatos-comando fromdos)                 |     |
-   |   |                                                                           |     |
-   |   | 5)   prompt# cat fichero.txt                                              |     |
-   |   |      Esta frase tiene 20 letras                                           |     |
-   |   |                                                Salida de cat|             |     |
-   |   |      Fin                                       -------------'             |     |
-   |   |                                                                           |     |
-   |   | 6)   prompt# cat fichero.txt | tr -c "[:alnum:]" 'n'                      |     |
-   |   |      Esta                                                                 |     |
-   |   |      frase            filtrada por tr sustituyendo todos los|             |     |
-   |   |      tiene            caracteres salvo los  números y letras|             |     |
-   |   |      20               (los espacios)por saltos de línea.    |             |     |
-   |   |      letras           --------------------------------------'             |     |
-   |   |                                                                           |     |
-   |   |      Fin                                                                  |     |
-   |   |                                                                           |     |
-   |   | 7)   prompt# cat fichero.txt | tr -sc "[a-zA-Z0-9]" 'n'                   |     |
-   |   |      Esta                                                                 |     |
-   |   |      frase            Como el anterior y además comprimiendo|             |     |
-   |   |      tiene            los caracteres repetidos (los saltos  |             |     |
-   |   |      20               de línea) en uno solo.                |             |     |
-   |   |      letras          ---------------------------------------'             |     |
-   |   |      Fin                                                                  |     |
-   |   |      prompt#                                                              |     |
-   |   |                                                                           |     |
-   |   |                                                                           |     |
-   |   '---------------------------------------------------------------------------'     |
-   |                                                                                     |
-   |   .---------------------------------------------------------------------------.     |
-   |   |cut [opciones] [fichero]  Muestra partes de un fichero según le indiquemos.|     |
-   |   |                                                                           |     |
-   |   |Opciones:                                                                  |     |
-   |   |-b lista ----- Selecionamos sólo esos bytes por línea.                     |     |
-   |   |-c lista ----- Selecciona sólo esos caracteres  por línea.                 |     |
-   |   |-d ----------- Usa un carácter en vez del tabulador para delimitar un      |     |
-   |   |               campo, debe entrecomillarse si es un carácter especial.     |     |
-   |   |-f lista ----- Selecionamos sólo esos campos/columnas.También muestra      |     |
-   |   |               cualquier línea que no  contenga un carácter separador.     |     |
-   |   |-s ----------- No muestra las líneas que no contienen delimitadores        |     |
-   |   |                                                                           |     |
-   |   | La lista admite los siguientes rangos:                                    |     |
-   |   | N     Sólo ese byte,carácter o columna.O varios separados por comas       |     |
-   |   | N-    Desde N hasta el final de línea.                                    |     |
-   |   | N-M   Desde N hasta M (incluído).                                         |     |
-   |   | M-    Desde el primero hasta M (incluído).                                |     |
-   |   |                                                                           |     |
-   |   | Ejemplo:   cut -d : -f 1,3,4 /etc/passwd                                  |     |
-   |   | mostrara solo las columnas con el nombre de usuario,su UID y su GID,      |     |
-   |   | separadas por los dos puntos.                                             |     |
-   |   |                                                                           |     |
-   |   '---------------------------------------------------------------------------'     |
-   |                                                                                     |
-   |   .---------------------------------------------------------------------------.     |
-   |   |paste [opciones] [ficheros]  Une las líneas de varios ficheros separándolas|     |
-   |   |                             por defecto con espacios.                     |     |
-   |   |Opciones:                                                                  |     |
-   |   |-d lista ----- especifica el carácter separador entre las columnas.        |     |
-   |   |-s ----------- Une sucesivamente las líneas en vez de hacerlo en columnas. |     |
-   |   |                                                                           |     |
-   |   '---------------------------------------------------------------------------'     |
-   |                                                                                     |
-   |-------------------------------------------------------------------------------------|
-   | Ejemplo combinado:                                                                  |
-   |                                                                                     |
-   |prompt# cat a.txt                                                                    |
-   |Esta frase tiene exactamente 31 letras                                               |
-   |                                                                                     |
-   |Fin del fin                                                                          |
-   |prompt# cat a.txt | tr -c "[:alnum:]" '\n' | tr 'A-Z' 'a-z' |sort -u | tail -n5      |
-   |exactamente                                                                          |
-   |fin                                                                                  |
-   |frase                                                                                |
-   |letras                                                                               |
-   |tiene                                                                                |
-   |prompt#                                                                              |
-   |                                                                                     |
-   |El primer filtro  sustituye todos los caracteres  que no son letras o números  por   |
-   |saltos de línea,el segundo las mayúsculas por minúsculas; el tercero (sort) ordena   |
-   |las líneas alfabéticamente eliminando las repetidas y el cuarto,tail muestra las 5   |
-   |últimas líneas del fichero.                                                          |
-   |                                                                                     |
-   |-------------------------------------------------------------------------------------|
+- nl fichero :: Muestra el contenido con las líneas numeradas. Opciones:
+  * -v 50 :: Muestra el contenido a partir de la línea 50.
+
+- cat fichero :: Muestra el contenido de un fichero.(-n numera las líneas)
+- cat fichero :: el contenido de un fichero.(-n numera las líneas)
+
+- tac fichero :: Muestra el contenido de un fichero en orden contrario
+
+- sort fichero :: Muestra el contenido de un fichero en orden alfabético.
+  * d :: Muestra directorios.
+  * f :: Ignora las mayúsculas y minúsculas.
+  * r :: De mayor a menor.
+  * n :: En orden númerico.
+  * u :: Elimina de su salida las líneas iguales consecutivas.
+
+-od fichero --------------- Muestra byte a byte el contenido de un fichero.
+ | |   ---------------------- Sin  opciones lo muestra  en  octal de dos en dos bytes.
+ | |-b ---------------------- en octal byte a byte                                     |
+ | |-c ---------------------- en caracteres ascii,de a uno,los saltos de línea como \n |
+ | |-cb --------------------- en caracteres ascii de a uno y su correspondiente octal.
+ | |-h ---------------------- en hexadecimal de dos en dos bytes                       |
+ | |-s ---------------------- en decimal de dos en dos bytes                           |
+ | '------------------                                                                 |
+
+
+ | pr fichero --------------- Muestra el contenido de un fichero de manera formateada.
+ |  |--columns=2 ------------ Lo muestra a dos columnas.
+ |  '------------------                                                                |
+
+ | more fichero -------.                                                               |
+ |                     |----> Muestra el contenido de un fichero de forma paginada.
+ | less fichero -------'                                                               |
+
+ | zcat fichero -------,                                                               |
+ | zmore fichero ------|----> Muestra el contenido de un fichero comprimido (.gz)      |
+ | zless fichero ------'                                                               |
+
+ | pg fichero --------------> Muestra el contenido de un fichero de forma paginada.
+ |  |                         Las opciones(«less» también lo permite)se introducen una |
+ |  |3 ---------------------- Muestra la página 3.              [vez abierto el prompt |
+ |  |/patrón ---------------- Busca la expresión patrón.
+ |  |q ---------------------- Nos salimos.
+ |  '------------------                                                                |
+
+ | wc fichero --------------- Muestra nº de líneas,palabras y bytes de un fichero      |
+ | echo expresión ----------- Muestra en pantalla el texto que le siga.
+ | strings fichero ---------- Muestra los caracteres mostrables de un fichero(no ascii)|
+ |                                                                                     |
+ | tail fichero ------------- Muestra las 10 últimas líneas de un archivo.
+ |  |tail -n Nº archivo ----- Muestra las Nº últimas líneas del fichero.
+ |  '-------------------                                                               |
+ |                                                                                     |
+ | head fichero ------------- Muestra las 10 primeras líneas de un fichero.
+ |  |head -n Nº fichero ----- Muestra las primeras Nº líneas de un fichero.
+ |  '------------------                                                                |
+ |                                                                                     |
+ |   .---------------------------------------------------------------------------.     |
+ |   |tee [opciones][fichero]                                                    |     |
+ |   |                                                                           |     |
+ |   |Comando que se suele usar como filtro entre dos pipes.Lee los datos de la  |     |
+ |   |entrada estándar y los vuelca en pantalla y en un fichero (ver cap.        |     |
+ |   |Entrada/Salida).Usado con la opción -a ,no sobreescribe el fichero sino    |     |
+ |   |que añade datos.                                                           |     |
+ |   '---------------------------------------------------------------------------'     |
+ |                                                                                     |
+ |   .---------------------------------------------------------------------------.
+ |   |grep [opciones] patrón fichero ---- Busca texto coincidente con un patrón. |     |
+ |   |                                                                           |     |
+ |   |Opciones:                                                                  |     |
+ |   |-A Nº  ------------------ Incluye las Nº líneas siguientes.                |     |
+ |   |-B Nº ------------------- Incluye las Nº líneas anteriores.                |     |
+ |   |-E - equivale a «egrep»-- Interpreta el patrón como una expresión regular. |     |
+ |   |-a ---------------------- Procesa un binario como si de texto se tratara.  |     |
+ |   |-r ---------------------- Realiza la búsqueda de forma recursiva           |     |
+ |   |-l ---------------------- Muestra los ficheros que contienen el patrón.    |     |
+ |   |-n ---------------------- Muestra la línea (y su nº)que contiene el patrón.|     |
+ |   '---------------------------------------------------------------------------'     |
+ |                                                                                     |
+ |   .---------------------------------------------------------------------------.     |
+ |   | uniq fichero ------------- Elimina las líneas consecutivas repetidas de un|     |
+ |   |                            fichero (o entrada estándar) mostrando sólo una|     |
+ |   |                            en su salida por pantalla (o un fichero )      |     |
+ |   |                                                                           |     |
+ |   |Sintaxis : uniq [opción] [entrada [salida]]                                |     |
+ |   |                                                                           |     |
+ |   |Opciones:                                                                  |     |
+ |   |-c    Comienza la línea con el número de veces que aparece.                |     |
+ |   |-i    Ignora mayúsculas y minúsculas al comparar.                          |     |
+ |   |-d    Muestra sólo líneas repetidas.                                       |     |
+ |   |-u    Muestra sólo líneas únicas.                                          |     |
+ |   '---------------------------------------------------------------------------'     |
+ |                                                                                     |
+ |   .---------------------------------------------------------------------------.     |
+ |   |tr  Sustituye o borra caracteres y al igual que tee lee desde la entrada   |     |
+ |   |    estándar (teclado)y vuelca los dator filtrados a la salida  estándar   |     |
+ |   |    (pantalla),por lo que se suele emplear entre tuberías.                 |     |
+ |   |                                                                           |     |
+ |   | Sintaxis: tr [opcion] lista1 [lista2]                                     |     |
+ |   |                                                                           |     |
+ |   | Sin opciones sustituye los carateres de la lista1 por los de la lista2,   |     |
+ |   | realizándose de uno en uno,el 1º de la lista1 por el 1º de la lista2...   |     |
+ |   | por lo que ambas listas deben tener mismo nº de caracteres o bien que la  |     |
+ |   | lista2 tenga tan sólo uno que sustituirá a todos los de la lista1.        |     |
+ |   |                                                                           |     |
+ |   | Opciones:                                                                 |     |
+ |   | -c --- Serán sustituídos todos salvo los de la lista1.                    |     |
+ |   | -d --- Elimina los caracteres espeficificados en la lista1.               |     |
+ |   | -s --- Comprime los caracteres repetidos de lista1 en uno solo            |     |
+ |   |                                                                           |     |
+ |   | Algunas de las secuencias de caracteres que se pueden especificar son:    |     |
+ |   |                                                                           |     |
+ |   |     .----------------------------------------------------.                |     |
+ |   |     |\n --------- Salto de línea                         |                |     |
+ |   |     |\r --------- Retorno del carro                      |                |     |
+ |   |     |\t --------- Tabulación horizontal                  |                |     |
+ |   |     |\v --------- Tabulación vertical                    |                |     |
+ |   |     |[=CAR=] ---- Todos los caracteres iguales que CAR   |                |     |
+ |   |     |CAR1-CAR2 -- Un rango de caracteres,p.ej. a-z y A-Z |                |     |
+ |   |     |[:alnum:] -- Letras y dígitos                       |                |     |
+ |   |     |[:alpha:] -- Las letras                             |                |     |
+ |   |     |[:blank:] -- Espacios en blanco horizontales        |                |     |
+ |   |     |[:cntrl:] -- Caracteres de control                  |                |     |
+ |   |     |[:digit:] -- Los dígitos                            |                |     |
+ |   |     '----------------------------------------------------'                |     |
+ |   |                                                                           |     |
+ |   |  Ejemplos:                                                                |     |
+ |   |                                                                           |     |
+ |   | 1)   prompt# tr A-Z a-z          2)  prompt# tr -d [=A=]                  |     |
+ |   |      HOLA MUNDO   «enter»            HOLA MUNDO   «enter»                 |     |
+ |   |      hola mundo   «ctrl+c»           HOL MUNDO    «ctrl+c»                |     |
+ |   |      promp#                          promp#                               |     |
+ |   |                                                                           |     |
+ |   |                                                                           |     |
+ |   | 3)   tr -d "\r" < texto_dos.txt > texto_unix.txt                          |     |
+ |   |      elimina todos los retornos de carro                                  |     |
+ |   |                                                                           |     |
+ |   |      tr '\r' '\n' < texto_mac.txt > texto_linux.txt                       |     |
+ |   |      sustituye los retornos de carro por saltos de línea                  |     |
+ |   |                                                                           |     |
+ |   |                       (ver cap. formatos-comando fromdos)                 |     |
+ |   |                                                                           |     |
+ |   | 5)   prompt# cat fichero.txt                                              |     |
+ |   |      Esta frase tiene 20 letras                                           |     |
+ |   |                                                Salida de cat|             |     |
+ |   |      Fin                                       -------------'             |     |
+ |   |                                                                           |     |
+ |   | 6)   prompt# cat fichero.txt | tr -c "[:alnum:]" 'n'                      |     |
+ |   |      Esta                                                                 |     |
+ |   |      frase            filtrada por tr sustituyendo todos los|             |     |
+ |   |      tiene            caracteres salvo los  números y letras|             |     |
+ |   |      20               (los espacios)por saltos de línea.    |             |     |
+ |   |      letras           --------------------------------------'             |     |
+ |   |                                                                           |     |
+ |   |      Fin                                                                  |     |
+ |   |                                                                           |     |
+ |   | 7)   prompt# cat fichero.txt | tr -sc "[a-zA-Z0-9]" 'n'                   |     |
+ |   |      Esta                                                                 |     |
+ |   |      frase            Como el anterior y además comprimiendo|             |     |
+ |   |      tiene            los caracteres repetidos (los saltos  |             |     |
+ |   |      20               de línea) en uno solo.                |             |     |
+ |   |      letras          ---------------------------------------'             |     |
+ |   |      Fin                                                                  |     |
+ |   |      prompt#                                                              |     |
+ |   |                                                                           |     |
+ |   |                                                                           |     |
+ |   '---------------------------------------------------------------------------'     |
+ |                                                                                     |
+ |   .---------------------------------------------------------------------------.     |
+ |   |cut [opciones] [fichero]  Muestra partes de un fichero según le indiquemos.|     |
+ |   |                                                                           |     |
+ |   |Opciones:                                                                  |     |
+ |   |-b lista ----- Selecionamos sólo esos bytes por línea.                     |     |
+ |   |-c lista ----- Selecciona sólo esos caracteres  por línea.                 |     |
+ |   |-d ----------- Usa un carácter en vez del tabulador para delimitar un      |     |
+ |   |               campo, debe entrecomillarse si es un carácter especial.     |     |
+ |   |-f lista ----- Selecionamos sólo esos campos/columnas.También muestra      |     |
+ |   |               cualquier línea que no  contenga un carácter separador.     |     |
+ |   |-s ----------- No muestra las líneas que no contienen delimitadores        |     |
+ |   |                                                                           |     |
+ |   | La lista admite los siguientes rangos:                                    |     |
+ |   | N     Sólo ese byte,carácter o columna.O varios separados por comas       |     |
+ |   | N-    Desde N hasta el final de línea.                                    |     |
+ |   | N-M   Desde N hasta M (incluído).                                         |     |
+ |   | M-    Desde el primero hasta M (incluído).                                |     |
+ |   |                                                                           |     |
+ |   | Ejemplo:   cut -d : -f 1,3,4 /etc/passwd                                  |     |
+ |   | mostrara solo las columnas con el nombre de usuario,su UID y su GID,      |     |
+ |   | separadas por los dos puntos.                                             |     |
+ |   |                                                                           |     |
+ |   '---------------------------------------------------------------------------'     |
+ |                                                                                     |
+ |   .---------------------------------------------------------------------------.     |
+ |   |paste [opciones] [ficheros]  Une las líneas de varios ficheros separándolas|     |
+ |   |                             por defecto con espacios.                     |     |
+ |   |Opciones:                                                                  |     |
+ |   |-d lista ----- especifica el carácter separador entre las columnas.        |     |
+ |   |-s ----------- Une sucesivamente las líneas en vez de hacerlo en columnas. |     |
+ |   |                                                                           |     |
+ |   '---------------------------------------------------------------------------'     |
+ |                                                                                     |
+ |-------------------------------------------------------------------------------------|
+ | Ejemplo combinado:                                                                  |
+ |                                                                                     |
+ |prompt# cat a.txt                                                                    |
+ |Esta frase tiene exactamente 31 letras                                               |
+ |                                                                                     |
+ |Fin del fin                                                                          |
+ |prompt# cat a.txt | tr -c "[:alnum:]" '\n' | tr 'A-Z' 'a-z' |sort -u | tail -n5      |
+ |exactamente                                                                          |
+ |fin                                                                                  |
+ |frase                                                                                |
+ |letras                                                                               |
+ |tiene                                                                                |
+ |prompt#                                                                              |
+ |                                                                                     |
+ |El primer filtro  sustituye todos los caracteres  que no son letras o números  por   |
+ |saltos de línea,el segundo las mayúsculas por minúsculas; el tercero (sort) ordena   |
+ |las líneas alfabéticamente eliminando las repetidas y el cuarto,tail muestra las 5   |
+ |últimas líneas del fichero.                                                          |
+ |                                                                                     |
+ |-------------------------------------------------------------------------------------|
    
 ** MAREÁNDOLOS
    |-------------------------------------------------------------------------------------|
@@ -757,130 +700,127 @@
 
 
 
-** COMPRIMIENDO 
+** Comprimiendo[fn:2]
 
-   |-----------------------------------------------------------------------------|
-   |7zip                                                                         |
-   |*****                                                                        |
-   |Comprimir  ---------------------- 7z a fichero.7z fichero                    |
-   |Descomprimir  ------------------- 7z e fichero_comprimido                    |
-   |Extraer donde indicamos --------- 7z x fichero_comprimido -o ruta_de_destino |
-   |Ver contenido  ------------------ 7z l fichero_comprimido                    |
-   |Chequea el contenido ------------ 7z t fichero_comprimido                    |
-   |                                                                             |
-   |               «««« Notas sobre 7zip »»»»                                    |
-   |                                                                             |
-   |-Comprime en formato 7z, zip, gzip, bzip2 y tar.                             |
-   |-Si es un directorio lo hace recursivamente sin emplear la opción -r         |
-   |                                                                             |
-   |-Con -t{tipo de fichero} tras las opción "a" elegimos el formato de          |
-   | compresión:                                                                 |
-   |                 7z a -tgzip fichero.gz fichero                              |
-   |                                                                             |
-   |-Con -p protegemos con una contraseña el fichero:                            |
-   |                                                                             |
-   |                 7z a -tgzip -p fichero.gz fichero                           |
-   |                                                                             |
-   |-Para comprimir más de un archivo gz o bz2 antes hay que empaquetarlos       |
-   | en formato tar:                                                             |
-   |                 1º) 7z a -ttar prueba.tar *.txt                             |
-   |                 2º) 7z a -tgzip prueba.tgz prueba.tar                       |
-   |                                                                             |
-   |-El formato 7z no guarda el dueño o grupo de un fichero por lo que           |
-   | no es recomendable para copias de seguridad.                                |
-   |-Es capaz de descomprimir zip,rar,gz,bz2,tar,cab,arj,cpio,deb,rpm            |
-   | aunque para rar necesita del paquete 7zip-rar                               |
-   |-----------------------------------------------------------------------------|
-   |                                                                             |
-   |Comprimir zip: ------------------ zip -r  fichero.zip fichero                |
-   |Cifrar el zip: ------------------ zip -re fichero.zip fichero                |
-   |Descomprimir zip: --------------- unzip fichero.zip                          |
-   |Descomprimir zip: --------------- unzip -d fichero.zip directorio_destino    |
-   |Ver contenido zip: -------------- unzip -v fichero.zip                       |
-   |Chequea la integridad ----------- unzip -t fichero.zip                       |
-   |                                                                             |
-   |Descomprimir rar: --------------- unrar e -r fichero.rar                     | 
-   |Descomprimir rar: --------------- unrar x -r fichero.rar directorio_destino  |
-   |Ver contenido rar: -------------- unrar l fichero.rar                        |
-   |Chequear rar: ------------------- unrar t fichero.rar                        |
-   |                                                                             |
-   |Descomprimir ace ---------------- unace e fichero.ace                        |
-   |Descomprimir ace ---------------- unace x fichero.ace directorio_destino/    |
-   |Ver contenido ace: -------------- unace l fichero.ace                        |
-   |Chequear ace: ------------------- unace t fichero.ace                        |
-   |                                                                             |
-   |Comprimir gz: ------------------- gzip -r fichero                            |
-   |Descomprimir gz: ---------------- gzip -d fichero.gz                         |
-   |Ver contenido gz ---------------- gzip -c fichero.gz                         |
-   |Chequea la integridad ----------- gzip -t fichero.gz                         |
-   |                                                                             |
-   |Comprimir bz2: ------------------ bzip2 fichero                              |
-   |Descomprimir bz2: --------------- bzip2 -d fichero.bz2                       |
-   |Ver contenido bz2: -------------- bzip2 -c fichero.bz2                       |
-   |Chequea la integridad ----------- bzip2 -t fichero.bz2                       |
-   |                                                                             |
-   | NOTA: r equivale en todos los casos a recursivo                             |
-   |-----------------------------------------------------------------------------|
-   | Mientras que zip comprime y empaqueta,gzip ó bzip2 sólo comprimen ficheros, |
-   | no directorios,para eso existe tar.                                         |
-   |                                                                             |
-   |Ficheros tar                                                                 |
-   |Empaquetar: --------------------- tar -vcf archivo.tar fichero1 fichero2...  |
-   |Desempaquetar: ------------------ tar -vxf archivo.tar                       |
-   |Ver contenido ------------------- tar -vtf archivo.tar                       |
-   |                                                                             |
-   | Para comprimir varios ficheros y empaquetarlos en un solo archivo           |
-   | hay que combinar el tar y el gzip o el bzip2 de la siguiente manera:        |
-   |                                                                             |
-   |Ficheros tar.gz (tgz)                                                        |
-   |Empaquetar y comprimir: --------- tar -zvcf archivo.tgz directorio           |
-   |Desempaquetar y descomprimir: --- tar -zvxf archivo.tgz                      |
-   |Ver contenido: ------------------ tar -zvtf archivo.tgz                      |
-   |                                                                             |
-   |Ficheros tar.bz2 (tbz2)                                                      |
-   |Empaquetar y comprimir: --------- tar -jvcf archivo.tbz2 directorio          |
-   |Desempaquetar y descomprimir: --- tar -jvxf archivo.tbz2                     |
-   |Ver contenido: ------------------ tar -jvtf archivo.tbz2                     |
-   |                                                                             |
-   |-- 0pciones de tar:                                                          |
-   | -c : crea un nuevo archivo.                                                 |
-   | -f :puede combinarse con:                                                   |
-   |     |-c,usa el nombre del fichero especificado para el fichero tar          |
-   |     |-x,retira del archivo el fichero especificado.                         |
-   |     '-----                                                                  |
-   | -t : lista de los ficheros que se encuentran en el fichero tar              |
-   | -v : muestra el proceso de archivo de los ficheros.                         |
-   | -x : extrae los ficheros de un archivo.                                     |
-   | -z : comprime el fichero tar con gzip.                                      |
-   | -j : comprime el fichero tar con bzip2.                                     |
-   |-----------------------------------------------------------------------------|
+*** 7zip
+- 7z a fichero.7z <fichero> :: Comprimir
+- 7z e fichero_comprimido :: Descomprimir
+- 7z x fichero_comprimido -o ruta_de_destino :: Extraer donde indicamos
+- 7z l fichero_comprimido :: Ver contenido
+- 7z t fichero_comprimido :: Chequea el contenido
+
+7zip Comprime en formato 7z, zip, gzip, bzip2 y tar. Si es un
+directorio lo hace recursivamente sin emplear la opción -r
+
+Con ~-t{tipo de fichero}~ tras las opción ~a~ elegimos el formato de
+compresión, por ej:
+#+BEGIN_EXAMPLE
+7z a -tgzip fichero.gz <fichero>
+#+END_EXAMPLE
 
 
-   |-----------------------------------------------------------------------------|
-   | fcrackzip         Intenta conseguir la contraseña de un fichero zip.        |
-   |                                                                             |
-   | Sintaxis:                                                                   |
-   | fcrackzip [opciones] fichero.zip                                            |
-   |                                                                             |
-   | Opciones:                                                                   |
-   |-b ---- Seleccionamos el modo fuerza bruta,probando según le especifiquemos. |
-   |-c ---- Seleccionamos los caracteres usados mediante fuerza bruta.           |
-   |  |a -- incluye todas las minúsculas [a-z]                                   |
-   |  |A -- incluye todas las mayúsculas [A-Z]                                   |
-   |  |1 -- incluye todos los números [0-9]                                      |
-   |  |! -- incluye [!:$%&/()=?[]+*~#]                                           |
-   |  |: -- incluye los caracteres que le sigan [:@]                             |
-   |  '-----                                                                     |
-   |-p ---- Especificamos una contraseña (y su longitud exacta) inicial.         |
-   |-l ---- Damos la longitud mínima-máxima de la clave,puede omitirse el máximo.|
-   |-u ---- Intenta usar unzip para descomprimir tras conseguir la clave.        |
-   |-D ---- Seleccionamos el modo diccionario,leyendo claves de un fichero dado. |
-   |                                                                             |
-   | Ejemplo:  fcrackzip -c a:@ -p aaa fichero.zip                               |
-   |                                                                             |
-   | Busca claves que contengan tres caracteres en minúsculas incluída la arroba |
-   |                                                                             |
-   |-----------------------------------------------------------------------------|
+Con ~-p~ protegemos con una contraseña el fichero, por ej:
+#+BEGIN_EXAMPLE
+7z a -tgzip -p fichero.gz <fichero>
+#+END_EXAMPLE
+
+Para comprimir más de un archivo gz o bz2 antes hay que empaquetarlos
+en formato tar:
+#+BEGIN_EXAMPLE
+7z a -ttar prueba.tar *.txt
+7z a -tgzip prueba.tgz prueba.tar
+#+END_EXAMPLE
+
+El formato 7z no guarda el dueño o grupo de un fichero por lo que no
+es recomendable para copias de seguridad. Es capaz de descomprimir
+zip,rar,gz,bz2,tar,cab,arj,cpio,deb,rpm aunque para rar necesita del
+paquete 7zip-rar
+
+*** zip
+- zip -r  fichero.zip fichero :: Comprimir zip
+- zip -re fichero.zip fichero :: Cifrar el zip
+- unzip fichero.zip :: Descomprimir zip
+- unzip -d fichero.zip directorio_destino :: Descomprimir zip
+- unzip -v fichero.zip :: Ver contenido zip
+- unzip -t fichero.zip :: Chequea la integridad
+
+*** rar
+- unrar e -r fichero.rar :: Descomprimir rar
+- unrar x -r fichero.rar directorio_destino :: Descomprimir rar
+- unrar l fichero.rar :: Ver contenido rar
+- unrar t fichero.rar :: Chequear rar
+
+*** gz
+- gzip -r fichero :: Comprimir gz
+- gzip -d fichero.gz :: Descomprimir gz
+- gzip -c fichero.gz :: Ver contenido gz
+- gzip -t fichero.gz :: Chequea la integridad
+
+*** bz2
+- bzip2 fichero :: Comprimir bz2
+- bzip2 -d fichero.bz2 :: Descomprimir bz2
+- bzip2 -c fichero.bz2 :: Ver contenido bz2
+- bzip2 -t fichero.bz2 :: Chequea la integridad
+
+NOTA: r equivale en todos los casos a recursivo
+
+*** tar
+Mientras que zip comprime y empaqueta, gzip ó bzip2 sólo comprimen
+ficheros, no directorios,para eso existe tar.
+
+- tar -vcf archivo.tar fichero1 fichero2... :: Empaquetar
+- tar -vxf archivo.tar :: Desempaquetar
+- tar -vtf archivo.tar :: Ver contenido
+
+Para comprimir varios ficheros y empaquetarlos en un solo archivo hay
+que combinar el tar y el gzip o el bzip2 de la siguiente manera:
+
+Ficheros tar.gz (tgz)
+  - tar -zvcf archivo.tgz directorio :: Empaquetar y comprimir
+  - tar -zvxf archivo.tgz :: Desempaquetar y descomprimir
+  - tar -zvtf archivo.tgz :: Ver contenido
+
+Ficheros tar.bz2 (tbz2)
+  - tar -jvcf archivo.tbz2 directorio :: Empaquetar y comprimir
+  - tar -jvxf archivo.tbz2 :: Desempaquetar y descomprimir
+  - tar -jvtf archivo.tbz2 :: Ver contenido
+
+0pciones de tar:
+- -c :: crea un nuevo archivo
+- -f :: puede combinarse con:
+  - -c :: usa el nombre del fichero especificado para el fichero tar
+  - -x :: retira del archivo el fichero especificado
+- -t :: lista de los ficheros que se encuentran en el fichero tar
+- -v :: muestra el proceso de archivo de los ficheros.
+- -x :: extrae los ficheros de un archivo.
+- -z :: comprime el fichero tar con gzip.
+- -j :: comprime el fichero tar con bzip2.
+
+    |-----------------------------------------------------------------------------|
+    | fcrackzip         Intenta conseguir la contraseña de un fichero zip.        |
+    |                                                                             |
+    | Sintaxis:                                                                   |
+    | fcrackzip [opciones] fichero.zip                                            |
+    |                                                                             |
+    | Opciones:                                                                   |
+    |-b ---- Seleccionamos el modo fuerza bruta,probando según le especifiquemos. |
+    |-c ---- Seleccionamos los caracteres usados mediante fuerza bruta.           |
+    |  |a -- incluye todas las minúsculas [a-z]                                   |
+    |  |A -- incluye todas las mayúsculas [A-Z]                                   |
+    |  |1 -- incluye todos los números [0-9]                                      |
+    |  |! -- incluye [!:$%&/()=?[]+*~#]                                           |
+    |  |: -- incluye los caracteres que le sigan [:@]                             |
+    |  '-----                                                                     |
+    |-p ---- Especificamos una contraseña (y su longitud exacta) inicial.         |
+    |-l ---- Damos la longitud mínima-máxima de la clave,puede omitirse el máximo.|
+    |-u ---- Intenta usar unzip para descomprimir tras conseguir la clave.        |
+    |-D ---- Seleccionamos el modo diccionario,leyendo claves de un fichero dado. |
+    |                                                                             |
+    | Ejemplo:  fcrackzip -c a:@ -p aaa fichero.zip                               |
+    |                                                                             |
+    | Busca claves que contengan tres caracteres en minúsculas incluída la arroba |
+    |                                                                             |
+    |-----------------------------------------------------------------------------|
 
 
 
@@ -1515,101 +1455,6 @@
  |  Para que un prompt sea permanente,hay que ponerlo en el fichero ~/.bashrc.              |
  |                                                                                          |
  |------------------------------------------------------------------------------------------|
-
-
-
-* JUEGOS
- |-----------------------------------------------------------------------------------------|
- |ninvaders --------------------------- Space Invaders en ncurses.                         |
- |bsdgames ---------------------------- Colección de juegos para consola.         (__)     |
- |sl ---------------------------------- Muestra un Tren pasando.                  (oo)     |            
- |apt-get moo ------------------------- La supervaca del apt ----------->  /------ \/      |
- |cowsay muuuuu ----------------------- Una vaca hablando en su idioma    / |    ||        | 
- |cowthink -p ¿¿muuuuu?? -------------- Una vaca pensando.               *  /\---/\        |
- |cowsay -f tux hola ------------------ Tux saludando.Ver /usr/share/cowsay/cows.          |
- |aptitude moo ------------------------ Se trata de añadir uves (-v) hasta lograr el huevo |
- |-----------------------------------------------------------------------------------------|
- 
- |-----------------------------------------------------------------------------------------|
- |                                                                                         |
- |    white  KQkq       GNU CHESS                                                          |
- | 8 |r . b q k b n r                                                                      |
- | 7 |p p p p p p p p   Programa para jugar al ajedrez.Una vez iniciado y en forma inter-  |
- | 6 |. . n . . . . .   activa,podemos pasarle una  serie de comandos o bien nuestro movi- |
- | 5 |. . . . . . . .   miento,usando para ello las coordenadas del tablero.Es fácil,sólo  |
- | 4 |. . P . . . . .   hay que indicar la posición inicial y la final de la pieza a mover.|
- | 3 |. . . . . . . .   Por ejemplo  si queremos mover el peón que está en c2 a c4,habría  | 
- | 2 |P P . P P P P P   que introducir el movimiento mediante el comando c2c4.El programa  |
- | 1 |R N B Q K B N R   nos mostrará tras cada jugada el desarrollo de la partida mediante |
- |   |_______________   un gráfico ascii.El comando para iniciar el juego es «gnuchess»    |
- |    a b c d e f g h                                                                      |
- |                                                                                         |
- |                                                                                         |
- | Lista de comandos:                                                                      |
- | quit ----------- Salimos del programa.                                                  |
- | exit ----------- En modo análisis,para el análisis y en caso contrario el programa.     |
- | help ----------- Muestra la ayuda.                                                      |
- | show ----------- Muestra información diversa.                                           |
- |  |board -------- el tablero actual.                                                     |
- |  |time --------- la configuración del tiempo.                                           |
- |  |moves -------- todos los movimientos.                                                 |
- |  |escape ------- movimientos que se escapan al jaque.                                   |
- |  |noncapture --- Movimientos sin captura.                                               |
- |  |capture ------ movimientos de captura.                                                |
- |  |eval --------- evaluación por piezas y del conjunto.                                  |
- |  |game --------- el historial de movimientos.                                           |
- |  |pin ---------- piezas inmovilizadas.                                                  |
- |  '-----                                                                                 |
- | pgnsave <fich.> -Guarda la partida en un fichero pgn.                                   |
- | pgnload <fich.> -Carga una partida desde un fichero pgn.                                |
- | epdload -------- Carga una partida en formato EPD.                                      |
- | epdsave -------- Guarda la partida en formato EPD.                                      |
- | manual --------- Hace parar al programa para poder introducir posiciones.               |
- | white ---------- Seleccionamos jugar con blancas.                                       |
- | black ---------- Seleccionamos jugar con negras.                                        |
- | go ------------- La máquina elige color y comienza el juego de forma inmediata.         |
- | book ----------- Gestionamos el libro de aperturas.                                     |
- |   |add --------- añadimos más aperturas,compilando book.dat desde book.pgn.             |
- |   |on ---------- activa el uso del libro de aperturas.                                  |
- |   |off --------- desactiva el uso del libro de aperturas.                               |
- |   |best -------- juega el mejor movimiento del libro.                                   |
- |   |worst ------- juega el peor movimiento del libro.                                    |
- |   |random ------ juega un movimiento al azar.                                           |
- |   |prefer ------ juega un buen movimiento (usado por defecto).                          |
- |   '------                                                                               |
- | easy ----------- Impedimos que piense mientra nos toca mover.                           |
- | hard ----------- Hace que la máquina piense en tiempo de juego de su oponente.          |
- | post  ---------- Modo verbose o detallado.                                              |
- | nopost --------- Eliminamos el modo verbose.                                            |
- | name nombre ---- Permite que dejes tu nombre.                                           |
- | new ------------ Nuevo juego.                                                           |
- | test ----------- Analiza según los siguientes parámetros                                |
- |  |movelist ----- Lee un fichero epd y muestra los movimientos legales para sus entradas.|
- |  |capture ------ Lee un fichero epd y muestra los capturas legales para sus entradas.   |
- |  |eval --------- Lee un fichero epd y muestra una evaluación para sus entradas.         |
- |  |capturespeed - Analiza la velocidad de los movimientos de captura.                    |
- |  |movegenspeed - Analiza la velocidad de los movimientos.                               |
- |  |evalspeed ---- tests speed of the evaluator                                           |
- |  '-----                                                                                 |
- | time ----------- Muestra el reloj(usado en servidores de ajedrez).                      |
- | hashsize N ----- Configura el tamaño de la memoria(tabla hash)para almacenar jugadas    |
- | hash [on|of] --- Activa/desactiva la búsqueda basándose en tablas hash (más rápida).    |
- | null [on|of] --- Activa/desactiva la búsqueda basándose en el algorritmo alfa-beta(1).  |
- | depth N -------- Establece la profundidad de búsqueda de la máquina.                    |
- | level ---------- Establece el tiempo por movimiento (en minutos)                        |
- | manual --------- Hace parar el juego para poder introducir posiciones.                  |
- | switch --------- Cambio de negras a blancas o viceversa.                                |
- | solve <fich.> -- Resuelve la partida en un fichero.                                     |
- | remove --------- Retrocede dos movimientos.                                             |
- | undo ----------- Retrocede un movimiento.                                               |
- |                                                                                         |
- |(1) Cuando nosotros jugamos al ajedrez hay movimientos en los que ni reparamos porque son|
- | obvios,por ejemplo darnos un jaque a nosotros mismos.Bien pues dicho así a groso modo   |
- | las máquinas piensan en todas las posibles combinaciones por muy absurdas que sean.     |
- | El algorritmo alfa-beta intenta paliar esta falta de heurística por parte de la máquina |
- | haciendo que la búsqueda del mejor movimiento sea más rápida.                           |
- |                                                                                         |
- |-----------------------------------------------------------------------------------------|
 
 
   
@@ -3808,10 +3653,10 @@
   | httrack http://sitio_web.com/                                                              |
   | Descarga  «sitio_web» completo                                                             |
   |                                                                                            |
-  | httrack http://sitio_web.com/ -*.zip*[<10]                                                 |
+  | httrack http://sitio_web.com/ ::.zip*[<10]                                                 |
   | Descarga  «sitio_web» completo salvo los zip menores de 10 KB                              |
   |                                                                                            |
-  | httrack http://sitio_web.com -*.jpg  +*logo.jpg+*[<10>50]                                  |
+  | httrack http://sitio_web.com ::.jpg  +*logo.jpg+*[<10>50]                                  |
   | Descargaría «sitio web.com»,descartando los ficheros .jpg salvo los que acabasen en logo   |
   | y sean mayores de 10 KB y menores de 50 KB.El 2º patrón tiene prioridad sobre el primero.  |
   |                                                                                            |
@@ -4169,3 +4014,12 @@ the   terms  of  the  GNU  Free  Documentation License, Version 1.2  or any
 later version published by the  Free Software Foundation; with no Invariant 
 Sections, no Front-Cover  Texts, and  no  Back-Cover  Texts. A  copy of the 
 license is included in the section entitled "GNU Free Documentation License".
+
+* Footnotes
+
+[fn:1] El formato ELF (Executable and Linkable Format) es un formato
+de archivo para ejecutables, código objeto, bibliotecas compartidas y
+volcados de memoria
+
+[fn:2] https://www.howtogeek.com/248780/how-to-compress-and-extract-files-using-the-tar-command-on-linux/
+

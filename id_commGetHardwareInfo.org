@@ -1,0 +1,254 @@
+#+TITLE:     Commands to get hardware information in linux
+#+AUTHOR:    Wilson S. Tubin
+#+EMAIL:     soyw@protonmail.com
+#+DATE:      2018-01-11 jue
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+
+* Peripheral Component Interconnect (PCI) information
+** know vendor id and product id
+#+name: resp
+#+BEGIN_SRC sh -n
+$ lspci -nn
+00:00.0 Host bridge [0600]: Intel Corporation Core Processor DRAM Controller [8086:0044] (rev 02)
+00:02.0 VGA compatible controller [0300]: Intel Corporation Core Processor Integrated Graphics Controller [8086:0046] (rev 02)
+00:16.0 Communication controller [0780]: Intel Corporation 5 Series/3400 Series Chipset HECI Controller [8086:3b64] (rev 06)
+00:1a.0 USB controller [0c03]: Intel Corporation 5 Series/3400 Series Chipset USB2 Enhanced Host Controller [8086:3b3c] (rev 05)
+00:1b.0 Audio device [0403]: Intel Corporation 5 Series/3400 Series Chipset High Definition Audio [8086:3b56] (rev 05)
+00:1c.0 PCI bridge [0604]: Intel Corporation 5 Series/3400 Series Chipset PCI Express Root Port 1 [8086:3b42] (rev 05)
+00:1c.1 PCI bridge [0604]: Intel Corporation 5 Series/3400 Series Chipset PCI Express Root Port 2 [8086:3b44] (rev 05)
+00:1d.0 USB controller [0c03]: Intel Corporation 5 Series/3400 Series Chipset USB2 Enhanced Host Controller [8086:3b34] (rev 05)
+00:1e.0 PCI bridge [0604]: Intel Corporation 82801 Mobile PCI Bridge [8086:2448] (rev a5)
+00:1f.0 ISA bridge [0601]: Intel Corporation Mobile 5 Series Chipset LPC Interface Controller [8086:3b09] (rev 05)
+00:1f.2 SATA controller [0106]: Intel Corporation 5 Series/3400 Series Chipset 4 port SATA AHCI Controller [8086:3b29] (rev 05)
+00:1f.3 SMBus [0c05]: Intel Corporation 5 Series/3400 Series Chipset SMBus Controller [8086:3b30] (rev 05)
+00:1f.6 Signal processing controller [1180]: Intel Corporation 5 Series/3400 Series Chipset Thermal Subsystem [8086:3b32] (rev 05)
+02:00.0 Network controller [0280]: Broadcom Corporation BCM4313 802.11b/g/n Wireless LAN Controller [14e4:4727] (rev 01)
+03:00.0 Ethernet controller [0200]: Realtek Semiconductor Co., Ltd. RTL8101E/RTL8102E PCI Express Fast Ethernet controller [10ec:8136] (rev 02)
+ff:00.0 Host bridge [0600]: Intel Corporation Core Processor QuickPath Architecture Generic Non-core Registers [8086:2c62] (rev 02)
+ff:00.1 Host bridge [0600]: Intel Corporation Core Processor QuickPath Architecture System Address Decoder [8086:2d01] (rev 02)
+ff:02.0 Host bridge [0600]: Intel Corporation Core Processor QPI Link 0 [8086:2d10] (rev 02)
+ff:02.1 Host bridge [0600]: Intel Corporation Core Processor QPI Physical 0 [8086:2d11] (rev 02)
+ff:02.2 Host bridge [0600]: Intel Corporation Core Processor Reserved [8086:2d12] (rev 02)
+ff:02.3 Host bridge [0600]: Intel Corporation Core Processor Reserved [8086:2d13] (rev 02)
+#+END_SRC
+
+Interpretation of line 16 (network card). The IDs are given inside the
+rightmost square brackets:
+
+	- 10ec is the ID vendor
+	- 8136 is the ID product
+
+As another example, line 3 (graphics card):
+
+   	- 8086 is the ID vendor
+	- 0046 is the ID product
+	       
+** Know more details
+same command but with  other options
+#+begin_src sh -n
+$lspci -vmm
+Slot:	00:00.0
+Class:	Host bridge
+Vendor:	Intel Corporation
+Device:	Core Processor DRAM Controller
+SVendor:	Hewlett-Packard Company
+SDevice:	Device 1425
+Rev:	02
+
+Slot:	00:02.0
+Class:	VGA compatible controller
+Vendor:	Intel Corporation
+Device:	Core Processor Integrated Graphics Controller
+SVendor:	Hewlett-Packard Company
+SDevice:	Device 1425
+Rev:	02
+
+Slot:	00:16.0
+Class:	Communication controller
+Vendor:	Intel Corporation
+Device:	5 Series/3400 Series Chipset HECI Controller
+SVendor:	Hewlett-Packard Company
+SDevice:	Device 1425
+Rev:	06
+
+Slot:	00:1a.0
+Class:	USB controller
+Vendor:	Intel Corporation
+Device:	5 Series/3400 Series Chipset USB2 Enhanced Host Controller
+SVendor:	Hewlett-Packard Company
+SDevice:	Device 1425
+Rev:	05
+ProgIf:	20
+
+Slot:	00:1b.0
+Class:	Audio device
+Vendor:	Intel Corporation
+Device:	5 Series/3400 Series Chipset High Definition Audio
+SVendor:	Hewlett-Packard Company
+SDevice:	Device 1425
+Rev:	05
+
+Slot:	00:1c.0
+Class:	PCI bridge
+Vendor:	Intel Corporation
+Device:	5 Series/3400 Series Chipset PCI Express Root Port 1
+Rev:	05
+
+Slot:	00:1c.1
+Class:	PCI bridge
+Vendor:	Intel Corporation
+Device:	5 Series/3400 Series Chipset PCI Express Root Port 2
+Rev:	05
+
+Slot:	00:1d.0
+Class:	USB controller
+Vendor:	Intel Corporation
+Device:	5 Series/3400 Series Chipset USB2 Enhanced Host Controller
+SVendor:	Hewlett-Packard Company
+SDevice:	Device 1425
+Rev:	05
+ProgIf:	20
+
+Slot:	00:1e.0
+Class:	PCI bridge
+Vendor:	Intel Corporation
+Device:	82801 Mobile PCI Bridge
+Rev:	a5
+ProgIf:	01
+
+Slot:	00:1f.0
+Class:	ISA bridge
+Vendor:	Intel Corporation
+Device:	Mobile 5 Series Chipset LPC Interface Controller
+SVendor:	Hewlett-Packard Company
+SDevice:	Device 1425
+Rev:	05
+
+Slot:	00:1f.2
+Class:	SATA controller
+Vendor:	Intel Corporation
+Device:	5 Series/3400 Series Chipset 4 port SATA AHCI Controller
+SVendor:	Hewlett-Packard Company
+SDevice:	Device 1425
+Rev:	05
+ProgIf:	01
+
+Slot:	00:1f.3
+Class:	SMBus
+Vendor:	Intel Corporation
+Device:	5 Series/3400 Series Chipset SMBus Controller
+SVendor:	Hewlett-Packard Company
+SDevice:	Device 1425
+Rev:	05
+
+Slot:	00:1f.6
+Class:	Signal processing controller
+Vendor:	Intel Corporation
+Device:	5 Series/3400 Series Chipset Thermal Subsystem
+SVendor:	Hewlett-Packard Company
+SDevice:	Device 1425
+Rev:	05
+
+Slot:	02:00.0
+Class:	Network controller
+Vendor:	Broadcom Corporation
+Device:	BCM4313 802.11b/g/n Wireless LAN Controller
+SVendor:	Hewlett-Packard Company
+SDevice:	Device 1483
+Rev:	01
+
+Slot:	03:00.0
+Class:	Ethernet controller
+Vendor:	Realtek Semiconductor Co., Ltd.
+Device:	RTL8101E/RTL8102E PCI Express Fast Ethernet controller
+SVendor:	Hewlett-Packard Company
+SDevice:	Device 1425
+Rev:	02
+
+Slot:	ff:00.0
+Class:	Host bridge
+Vendor:	Intel Corporation
+Device:	Core Processor QuickPath Architecture Generic Non-core Registers
+SVendor:	Hewlett-Packard Company
+SDevice:	Device 1425
+Rev:	02
+
+Slot:	ff:00.1
+Class:	Host bridge
+Vendor:	Intel Corporation
+Device:	Core Processor QuickPath Architecture System Address Decoder
+SVendor:	Hewlett-Packard Company
+SDevice:	Device 1425
+Rev:	02
+
+Slot:	ff:02.0
+Class:	Host bridge
+Vendor:	Intel Corporation
+Device:	Core Processor QPI Link 0
+SVendor:	Hewlett-Packard Company
+SDevice:	Device 1425
+Rev:	02
+
+Slot:	ff:02.1
+Class:	Host bridge
+Vendor:	Intel Corporation
+Device:	Core Processor QPI Physical 0
+SVendor:	Hewlett-Packard Company
+SDevice:	Device 1425
+Rev:	02
+
+Slot:	ff:02.2
+Class:	Host bridge
+Vendor:	Intel Corporation
+Device:	Core Processor Reserved
+SVendor:	Hewlett-Packard Company
+SDevice:	Device 1425
+Rev:	02
+
+Slot:	ff:02.3
+Class:	Host bridge
+Vendor:	Intel Corporation
+Device:	Core Processor Reserved
+SVendor:	Hewlett-Packard Company
+SDevice:	Device 1425
+Rev:	02
+#+end_src
+
+
+* Usb stick information
+#+begin_src sh -n
+$ lsusb
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 001 Device 002: ID 8087:0020 Intel Corp. Integrated Rate Matching Hub
+Bus 002 Device 002: ID 8087:0020 Intel Corp. Integrated Rate Matching Hub
+Bus 001 Device 003: ID 04f2:0402 Chicony Electronics Co., Ltd Genius LuxeMate i200 Keyboard
+Bus 001 Device 004: ID 0a5c:21b4 Broadcom Corp. BCM2070 Bluetooth 2.1 + EDR
+Bus 002 Device 003: ID 064e:f203 Suyin Corp. 
+#+end_src  
+Interpretation of line 2:
+	       1d6b is the vendor id
+	       0002 is the product id
+
+Searching on the internet with the vendor/product ID, "Linux" and
+"driver" as the search terms often results in information regarding
+the driver support status for a certain chipset. If a search for the
+vendor/product ID does not yield usable results, a search for the chip
+code names, which are also often provided by lsusb and lspci. For the
+above outputs, the code names would be:
+   - RTL8101E/RTL8102E :: network card example
+   - Intel Corporation Core Processor Integrated Graphics Controller ::  graphics card.
+
+
+* Curiosities
+  These are some curious org-mode commands used in this document
+  https://www.youtube.com/watch?v=lsYdK0C2RvQ

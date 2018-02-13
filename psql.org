@@ -1,6 +1,10 @@
 #+TITLE: Comandos del programa de consola 'psql' para administracion de postgresql9.4
 #+AUTHOR:    Wilson S. Tubín
 * Gestion de usuario
+** Entrar a usuario postgres
+   - su postgres <RET> <contrasena> :: para logearse como usuario
+        postgres. contrasena=pss12wil
+   
 ** con psql no inciada y loguiado como usuario postgres
    - createuser wadmin :: crear el usuario 'wadmin'
    - createdb midb :: crear base de datos

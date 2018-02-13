@@ -36,3 +36,4 @@
        actual con todo y cambios.
   - git rm grit.tex :: elimina y deja de darle seguimiento al archivo
        grit.tex
+  - git help <comando> :: obtener documentacion para <comando>

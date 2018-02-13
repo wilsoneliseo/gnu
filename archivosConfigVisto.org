@@ -1,0 +1,22 @@
+
+#+TITLE:     Archivos de configuracion Debian/Ubuntu vistos
+#+AUTHOR:    wilson
+#+EMAIL:     wilson@debian
+#+DATE:      2018-01-25 Thu
+
+- ~/.bash_aliases :: si no me equivoco, en Debian, este archivo se
+     puede utilizar como tal, cuando previamente se descomentó en
+     =~/.bashrc= las lineas pertinentes. En el caso de Ubuntu no hay
+     que descomentar nada en =~/.bashrc=, solo es te colocar un
+     archivo llamado =~/.bash_aliases= y colocar en el los alias que
+     requiramos.
+
+- ~/.bashrc ::
+
+- /etc/bash.bashrc :: estas son configuraciones que se aplican a TODOS
+     los usuarios y arrancan cuando se abre bash a difrencia de
+     ponerlo en /etc/profile que arrancarian cuando inicia el sistema.
+
+- /etc/profile :: configuraciones que arrancan cuando se inicia la
+                  computadora.
+

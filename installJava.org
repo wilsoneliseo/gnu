@@ -1,0 +1,83 @@
+* Instalación de Java de Oracle en GNU/Linux Ubuntu 16.04
+A continuación lo pasos utilizados para la instalación de java de
+Oracle  en Ubuntu 16.04.
+
+#+BEGIN_SRC sh
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+#+END_SRC
+
+
+Luego se instala JDK 9, utilizando el siguiente comando
+
+#+BEGIN_SRC sh
+sudo apt-get install oracle-java9-installer
+#+END_SRC
+
+* Gestionando Java
+Puede haber varias instalaciones de Java en un servidor. Puede
+configurar cual será la versión por defecto para su uso mediante la
+línea de comandos usando update-alternatives, que gestiona cuales
+enlaces simbólicos se utilizan para diferentes comandos.
+
+#+BEGIN_SRC sh
+sudo update-alternatives --config java
+#+END_SRC
+
+Con esto mostrara un listado numerado con todas las versiones de java
+instaladas. Puede elegir el número que desea usar como
+predeterminado. Esto también se puede hacer para otros comandos Java,
+como el compilador (javac), el generador de documentación (javadoc),
+la herramienta JAR de firma (jarsigner), y más. Se puede utilizar el
+siguiente comando, rellenando el comando que desea personalizar:
+
+#+BEGIN_SRC sh
+sudo update-alternatives --config <command> 
+#+END_SRC
+
+* Definiendo la Variable de Entorno JAVA_HOME
+Muchos programas, como los servidores de Java, usan la variable de
+entorno JAVA_HOME para determinar la ubicación de la instalación de
+Java. Para establecer esta variable de entorno, primero debe averiguar
+donde está instalado Java. Puede hacer esto mediante la ejecución del
+mismo comando que en el apartado anterior.
+
+#+BEGIN_SRC sh
+sudo update-alternatives --config java
+#+END_SRC
+
+Copiar la ruta de la instalación preferida y luego abrir
+/etc/environment usando nano o su editor de texto favorito.
+
+#+BEGIN_SRC sh
+sudo nano /etc/environment
+#+END_SRC
+
+Al final de este archivo, agregue la siguiente línea, asegurándose de
+sustituir la ruta resaltada con su ruta copiada.
+
+#+BEGIN_SRC sh
+JAVA_HOME="/usr/lib/jvm/java-9-oracle"
+#+END_SRC
+
+Guarde, salga del archivo y vuelva a cargarlo.
+
+#+BEGIN_SRC sh
+source /etc/environment
+#+END_SRC
+
+Ahora puede probar si la variable de entorno se ha establecido
+mediante la ejecución del siguiente comando:
+
+#+BEGIN_SRC sh
+echo $JAVA_HOME
+#+END_SRC
+
+Esto devolverá la ruta que acaba de establecer.
+
+Ahora ha instalado Java y sabe cómo manejar diferentes versiones de la
+misma. Ahora puede instalar el software que se ejecuta en Java, como
+son Tomcat, Jetty, Glassfish, Cassandra, o Jenkins.
+
+* Fuente
+  https://www.digitalocean.com/community/tutorials/como-instalar-java-con-apt-get-en-ubuntu-16-04-es

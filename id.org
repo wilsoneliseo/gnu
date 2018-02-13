@@ -1,0 +1,185 @@
+#+TITLE:     Instalación Debian 9.3 Intel 64-bits
+#+AUTHOR:    Wilson S. Tubín
+#+EMAIL:     wilsoneliseogt@gmail.com
+#+DATE:      2018-01-06 sáb
+#+DESCRIPTION: Pasos de instalacion del sistema operativo Debian GNU/Linux 9.3 64-bits en una HP G42-364LA
+#+KEYWORDS: id es de las iniciales de install debian
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+
+* Abstract
+  Se muestra los pasos de instación del sistema operativo Debian en
+  una HP G42-364LA. 
+
+  La [[https://www.debian.org/releases/stretch/amd64/index.html.en][guía de instalación para Debian GNU/Linux]] 9.3 para 64-bits,
+  lanzada en diciembre de 2017, como versión estable de nombre clave
+  /strech/[fn:1], es de dónde se obtiene toda la información.
+
+* Distribuciones
+  Se ofrece tres distribuciones para debian
+  - stable :: si necesitas estabilidad y seguridad. Algunos software
+              son bastante viejos pero es el entorno con menos errores
+              para trabajar, puesto que, se han venido corrigiendo con
+              el tiempo.
+  - testing :: tienen software mas actualizado que /stable/, y es
+               menos propenso a romperse que /unstable/. Pero cuando
+               ocurre, podria tomar un largo tiempo para la
+               corrección. Podrian ser dias o meses. No tiene soporte
+               permanente de seguridad.
+  - unstable :: si eres un usuario con experiencia y piensas hacerle
+                cara a errores extraños, incluso a la rotura completa
+                del sistema. Tendrás el sofware mas nuevo y
+                asombroso. Los errores usualmente son corregidos
+                rapidamente.
+
+  La distribucion que ofrece debian en su pagina principal corresponde
+  a la version /stable/. Esta será la que se instalará.
+
+* Sobre este documento
+  De aquí en adelante este documento estará ordenado con un estilo
+  lineal, yendo a través del proceso de instalación de principio a
+  fin. Los pasos son[fn:2]:
+
+  1. Determinar si su hadware cumple con los requerimientos para
+     instalar el sistema
+
+  2. Respaldar su actual sistema con /back up/, realizar la planeación
+     necesaria y la configuración del hardware previo a instalar
+     GNU/Debian.
+
+  3. Obtener los archivos necesarios para su método de instalación.
+
+  4. El arranque del sistema de instalación.
+
+  5. Elegir lenguaje, configurar modulos controladores de perifericos,
+     configurar conexion a la red, particiones del disco duro e
+     instalacion del sistema base.
+
+  6. Arrancando en su nuevo sistema.
+
+* Requerimientos
+  En [[https://www.debian.org/releases/stretch/amd64/ch02s01.html.en#idm46300558685232][Supported Architectures]] se presenta la siguiente tabla
+|----------------------------+--------------------+------------------------------+------------|
+| Architecture               | Debian Designation | Subarchitecture              | Flavor     |
+|----------------------------+--------------------+------------------------------+------------|
+| Intel x86-based            | i386               | default x86 machines         | default    |
+|                            |                    | Xen PV domains only          | xen        |
+|----------------------------+--------------------+------------------------------+------------|
+| AMD64 & Intel 64           | amd64              |                              |            |
+|----------------------------+--------------------+------------------------------+------------|
+| ARM                        | armel              | Marvell Kirkwood and Orion   | marvell    |
+|----------------------------+--------------------+------------------------------+------------|
+| ARM with hardware FPU      | armhf              | multiplatform                | armmp      |
+|----------------------------+--------------------+------------------------------+------------|
+| 64bit ARM                  | arm64              |                              |            |
+|----------------------------+--------------------+------------------------------+------------|
+| 32bit MIPS (big-endian)    | mips               | MIPS Malta                   | 4kc-malta  |
+|                            |                    | Cavium Octeon                | octeon     |
+|----------------------------+--------------------+------------------------------+------------|
+| 64bit MIPS (little-endian) | mips64el           | MIPS Malta                   | 5kc-malta  |
+|                            |                    | Cavium Octeon                | octeon     |
+|                            |                    | Loongson 3                   | loongson-3 |
+|----------------------------+--------------------+------------------------------+------------|
+| 32bit MIPS (little-endian) | mipsel             | MIPS Malta                   | 4kc-malta  |
+|                            |                    | Cavium Octeon                | octeon     |
+|                            |                    | Loongson 3                   | loongson-3 |
+|----------------------------+--------------------+------------------------------+------------|
+| Power Systems              | ppc64el            | IBM POWER8 or newer machines |            |
+|----------------------------+--------------------+------------------------------+------------|
+| 64bit IBM S/390            | s390x              | IPL from VM-reader and DASD  | generic    |
+|----------------------------+--------------------+------------------------------+------------|
+
+  Ambos procesadores AMD64 e Intel 64 son compatibles. Con esto, queda
+  establecido que la HP G42-364LA cumple, dado que este dispositivo
+  incluye un procesador Intel 64
+
+* Respaldar archivos y planeación de configuracion de hardware
+  Antes de comezar, asegurese de respaldar (/back up/) cada archivo de
+  su sitema actual y que considere necesario. Si es la primera vez que
+  un sistema operativo no nativo esta siendo instalado en su
+  computadora, es probable que necesite configurar particiones del
+  disco duro para hacer un espacio para Debian GNU/Linux.
+
+  También, importa encontrar informacion del hardware de su
+  computadora previo a la instalación. En la mayoria de casos, el
+  instalador es capaz de detectar su hardware automáticamente. Pero es
+  preferible familiarizarse con el hardware con que dispone.
+
+  La información del hardware puede ser reunido a partir de:
+  - Manuales de la pieza de hardware en cuestión.
+  - Las pantallas de configuracion BIOS de su computadora. A menudo se
+    ingresa a la BIOS mediante /Delete/ o /F2/ al prender la maquina.
+  - Panel de control de MS-Windos, si lo tiene instalado. Esto es
+    especialmente util para informacion de la RAM y el disco duro.
+
+  Los controladores en Linux, en la mayoria de los casos, no son
+  escritos para cierto "producto" o "marca" para un fabricante en
+  especifico, pero si para ciertos hardware/chipset[fn:3]. Muchos
+  productos/marcas son, aparentemente diferentes, pero estan basados
+  en /el mismo diseño de hardware/. No es poco común que fabricantes
+  de chips proporcionen los así llamados "referencias de diseño", para
+  productos basados en sus chips que son usados por diferentes
+  fabricantes de dispositivos y vendidos bajo diferentes nombres de
+  productos y marcas.
+
+Tiene sus ventajas y desventajas.  Una ventaja es que un controlador
+para un chipset funciona con muchos productos diferentes de diferentes
+fabricantes, siempre y cuando su producto esté basado en el mismo
+chipset.  La desventaja es que no siempre es fácil ver qué chipset se
+usa en un determinado producto/marca.  Desafortunadamente, a veces los
+fabricantes de dispositivos cambian la *base de hardware* de sus
+productos sin cambiar el nombre del producto o al menos el número de
+versión del producto, de modo que cuando dos artículos de la misma
+marca/nombre de producto se compran en diferentes momentos, a veces se
+pueden basar en dos chipset y, por lo tanto, usan dos controladores
+diferentes o puede que no haya ningún controlador para ninguno de
+ellos.
+
+Para dispositivos USB/PCI[fn:4]/PCI-Express/ExpressCard, una buena forma de
+averiguar en qué chipset se basan es mirar sus ID de dispositivo.
+Todos los dispositivos USB/PCI/PCI-Express/ExpressCard tienen los
+llamados identificadores de "proveedor" y "producto", y la combinación
+de estos dos suele ser la misma para cualquier producto basado en el
+mismo chipset.
+
+En sistemas Linux, estos ID se pueden leer con el comando ~lsusb~ para
+dispositivos USB y con el comando ~lspci -nn~ para dispositivos
+PCI/PCI-Express/ExpressCard.  Las ID de proveedor y de producto
+generalmente se dan en forma de dos números hexadecimales, separados
+por dos puntos, como "1d6b:0001". [[file:commGetHardwareInfo.org][Ver]].
+
+Debian GNU/Linux tiene disponible las llamadas "Sistemas Vivos"[fn:5]
+para ciertas arquitecturas. Un sistema vivo es un sistema, de solo
+lectura, precofigurado en formato comprimido que puede ser utilizado
+para arrancar desde un medio de solo lectura como CD or DVD. Usando
+esto por defecto no se crean cambios permantentes en su
+computadora. Puede hacer cambios de configuracion e instalar programas
+dentro del /sistema vivo/ pero todos estos ocurren en la RAM, es
+decir, cuando apaga y vuelve a enceder se reinician todos los cambios
+y vuelve a su configuracion inicial. Esto es util cuando se quiere
+saber si el hardware de su computadora soporta GNU/Linux.
+
+
+
+* Footnotes
+
+[fn:1] Las versiones de debian reciben un /nombre clave/. En los
+ultimos años se ha estado utilizando el nombre de personajes de Toy
+Story. Ver [[https://www.debian.org/doc/manuals/debian-faq/ch-ftparchives.en.html#s-sourceforcodenames][Where do these codenames come from?]]
+
+[fn:2] Correlacionado respectivamente con las siguientes secciones de
+  este documento
+
+[fn:3] una colección de circuitos integrados que forman el conjunto
+necesario para hacer un dispositivo electrónico, como una placa base
+de computadora o un teléfono portátil.
+
+[fn:4] Peripheral Component Interconnect
+
+[fn:5] Live-System

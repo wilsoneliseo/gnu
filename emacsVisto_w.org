@@ -1,0 +1,32 @@
+#+TITLE:     Emacs Visto en Windows
+#+AUTHOR:    Wilson S. Tubin
+#+EMAIL:     wilsoneliseogt@gmail.com
+#+DATE:      2017-07-25 mar
+#+DESCRIPTION: Contiene combinaciones de teclas e informacion sobre el uso de emacs 24 en windows
+#+LANGUAGE:  es
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+
+* Modo TeX
+** Edicion de comandos TeX
+   - C-j :: Inserte una ruptura de párrafo (dos líneas nuevas) y compruebe el
+   párrafo anterior para las llaves o signos de dólar desequilibrados
+   (tex-terminate-paragraph).
+   - C-c { :: Insertar '{}' y colocar el punto entre ellos
+              (tex-insert-braces).
+   - C-c } :: Se mueve hacia el proximo \{endmacro}
+
+** Edicion de comandos LaTeX
+   El modo LaTeX provee de unas cuantas caracteristicas extras no
+   aplicable a TeX plano.
+
+   - C-c C-o :: Inserta `\begin' y `\end' para un bloque LaTeX y
+                posiciona el punto entre ellos (tex-latex-block).
+   - C-c C-e :: Cerrar el bloque LaTeX más interno aún no cerrado
+                (tex-close-latex-bloque).
+* Varios
+  - M-x list-packages :: lista los paquetes instalados y los nuevos
+       que se pueden instalar
