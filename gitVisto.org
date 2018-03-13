@@ -26,16 +26,13 @@
   - git push -u origin master :: enviar los archivos locales al
        repositorio en linea.
   - git log :: mostrar los commits creados
-  - git checkout <codigoHash> :: regresa al commit, del proyecto, que
-       identifica el codigo hash
-  - git checkout master :: regresa al ultimo commit hecho
   - git rm grit.tex :: elimina y deja de darle seguimiento al archivo
        grit.tex
   - git help <comando> :: obtener documentacion para <comando>
   - git branch :: ver las ramas locales
   - git branch -a :: ver las ramas locales y remotas
 
-* remoto
+* Deshacer commits locales
 Se han probado en forma local con exito, pero al momento de hacer el
 push hacia github ha sido rechazado.
 
@@ -47,7 +44,7 @@ push hacia github ha sido rechazado.
   - git reset --hard HEAD~1 :: regresa al penultimo commit y borra el
        actual con todo y cambios (probado con exito).
 
-* borrar commit remoto
+* Borrar commit remoto
 Borrar un commit en forma local es bastante sencillo, el problema es
 que con esto vamos a reescribir la historia y despues no vamos a poder
 pusheando a origin master.
@@ -75,12 +72,12 @@ commit. ~Test directories~ la descripcion del commit.
 El que se va ha eliminar es el comit con codigo hash bffd2e3.
 
 ** Pasos
-1. Ver todos los branch, locales y remotos. (opcional)
+*** Ver todos los branch, locales y remotos. (opcional)
 #+BEGIN_EXAMPLE
 $ git branch -a
 #+END_EXAMPLE
 
-2. Crear una nueva rama (y cambiarse hacia el) a partir del
+*** Crear una nueva rama (y cambiarse hacia el) a partir del
    commit(83e4b43) del cual los commits posteriores queremos eliminar.
 #+BEGIN_EXAMPLE
 $ git checkout 83e4b43 -b nueva_historia
@@ -89,7 +86,7 @@ $ git checkout 83e4b43 -b nueva_historia
 con esto ya tenemos una rama que incluyen los commits desde el primero
 hasta el 83e4b43.
 
-3. Apilar los commits del la rama master, sobre la nueva rama creada
+*** Apilar los commits del la rama master, sobre la nueva rama creada
    (~nueva_historia~)
 #+BEGIN_EXAMPLE
 $ git cherry-pick d785853
@@ -113,15 +110,15 @@ bffd2e3 We want to delete this commit [John Smith]
 e9f839a Fix bug: wrong params order in assertGreaterThan [Pepe Doval]
 fc60f4f First prototype [Pepe Doval]
 #+END_EXAMPLE
-porque no esta el commit que queremos elimiar (bffd2e3)
+porque no esta el commit que queremos eliminar (bffd2e3)
 
-4. pushear a origin esta nueva historia
+*** pushear a origin esta nueva historia
 #+BEGIN_EXAMPLE
 $ git push origin nueva_historia
 #+END_EXAMPLE
 para ver las ramas locales y remotas puede hacer =$ git branch -a=
 
-5. Ahora ha borrar la rama master en remoto (github), esto se hace
+*** Ahora ha borrar la rama master en remoto (github), esto se hace
    anteponiendo dos puntos al nombre de la rama
 #+BEGIN_EXAMPLE
 $ git push origin :master
